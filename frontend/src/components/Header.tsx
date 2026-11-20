@@ -426,7 +426,7 @@ export default function Header() {
               alt="Sreshta"
               width={140}
               height={45}
-              className="h-9 sm:h-11 w-auto max-w-[150px] sm:max-w-[190px] object-contain"
+              className="h-8 sm:h-9 w-auto max-w-[140px] sm:max-w-[170px] object-contain"
               style={{ width: 'auto' }}
               unoptimized
               priority
@@ -598,13 +598,13 @@ export default function Header() {
       {/* Desktop white top */}
       <div className="bg-white hidden lg:block overflow-x-clip w-full max-w-[100vw]">
         <div className="flex items-end h-[76px] pl-[120px] xl:pl-[128px] pr-4 xl:pr-10 pb-[10px]">
-          <Link href="/" className="flex items-center shrink-0 translate-y-2.5">
+          <Link href="/" className="flex items-center shrink-0 mb-1 translate-y-0.5">
             <Image
               src={logoUrl}
               alt="Sreshta"
-              width={260}
-              height={70}
-              className="h-[48px] xl:h-[54px] w-auto object-contain"
+              width={240}
+              height={60}
+              className="h-[38px] xl:h-[42px] w-auto object-contain"
               style={{ width: 'auto' }}
               unoptimized
               priority
