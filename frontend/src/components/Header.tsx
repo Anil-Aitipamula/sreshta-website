@@ -416,7 +416,7 @@ export default function Header() {
               <img
                 src={logoIconUrl}
                 alt="Logo"
-                className="w-full h-full object-contain [clip-path:circle(47%)] scale-[0.85]"
+                className="w-full h-full object-contain p-0.5"
               />
             </div>
           </div>
@@ -426,7 +426,7 @@ export default function Header() {
               alt="Sreshta"
               width={120}
               height={40}
-              className="h-8 sm:h-10 w-auto max-w-[140px] sm:max-w-[180px] object-contain [clip-path:inset(1px_4px)]"
+              className="h-8 sm:h-10 w-auto max-w-[140px] sm:max-w-[180px] object-contain"
               style={{ width: 'auto' }}
               unoptimized
               priority
@@ -506,7 +506,7 @@ export default function Header() {
               alt="Sreshta"
               width={120}
               height={40}
-              className="h-10 w-auto object-contain [clip-path:inset(1px_4px)]"
+              className="h-10 w-auto object-contain"
               style={{ width: 'auto' }}
               unoptimized
             />
@@ -604,7 +604,7 @@ export default function Header() {
               alt="Sreshta"
               width={280}
               height={80}
-              className="h-[50px] xl:h-[60px] w-auto object-contain [clip-path:inset(1px_4px)]"
+              className="h-[50px] xl:h-[60px] w-auto object-contain"
               style={{ width: 'auto' }}
               unoptimized
               priority
@@ -751,7 +751,7 @@ export default function Header() {
             alt="Sreshta"
             width={75}
             height={75}
-            className="w-full h-full object-contain [clip-path:circle(47%)] scale-[0.85]"
+            className="w-full h-full object-contain p-1"
             unoptimized
             priority
           />
