@@ -5,7 +5,7 @@ import WishlistPage from '@/components/WishlistPage';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'My Wishlist | Anagha',
+  title: 'My Wishlist | Sreshta',
 };
 
 export default function WishlistRoute() {

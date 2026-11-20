@@ -298,7 +298,7 @@ export default function ProductDetailPanel({
           </button>
           {openSection === 'auth' && (
             <div className="pb-5 pt-1 text-[13px] text-gray-600 leading-relaxed">
-              <p className="mb-2">Every piece of Anagha Jewellery is strictly quality-checked and certified.</p>
+              <p className="mb-2">Every piece of Sreshta Jewellery is strictly quality-checked and certified.</p>
               <ul className="list-disc pl-4 space-y-1">
                 <li><strong>Premium Silver:</strong> Minimum 92.5% purity guaranteed.</li>
                 <li><strong>Quality Craftsmanship:</strong> Handcrafted with precision and care.</li>

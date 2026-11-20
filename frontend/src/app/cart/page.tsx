@@ -5,7 +5,7 @@ import CartPage from '@/components/CartPage';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Shopping cart | Anagha',
+  title: 'Shopping cart | Sreshta',
 };
 
 export default function CartRoute() {

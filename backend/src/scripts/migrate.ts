@@ -68,11 +68,11 @@ async function main() {
 
   await sql`CREATE INDEX IF NOT EXISTS website_customers_email_idx ON website_customers (email)`;
 
-  const adminEmail = 'admin@anagha.com';
+  const adminEmail = 'admin@sreshta.com';
   const adminHash = await bcrypt.hash('admin123', 10);
   await sql`
     INSERT INTO website_customers (email, password_hash, name, mobile, is_admin)
-    VALUES (${adminEmail}, ${adminHash}, ${'Anagha Admin'}, ${'9999999999'}, ${true})
+    VALUES (${adminEmail}, ${adminHash}, ${'Sreshta Admin'}, ${'9999999999'}, ${true})
     ON CONFLICT (email) DO UPDATE SET
       password_hash = EXCLUDED.password_hash,
       is_admin = TRUE,

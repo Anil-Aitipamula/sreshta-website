@@ -52,7 +52,7 @@ export default function FraudWarningPage() {
                 </p>
 
                 <p>
-                  Please note that under no circumstances shall Anagha Jewellery and Lifestyle Limited and/or its affiliates and subsidiaries be held liable or responsible for any claims, losses, damages, expenses, or other inconvenience resulting from or in any way connected to the actions of these imposters.
+                  Please note that under no circumstances shall Sreshta Jewellery and Lifestyle Limited and/or its affiliates and subsidiaries be held liable or responsible for any claims, losses, damages, expenses, or other inconvenience resulting from or in any way connected to the actions of these imposters.
                 </p>
               </div>
 

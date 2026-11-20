@@ -1,4 +1,4 @@
-# Deploy Anagha on GCP (manual console)
+# Deploy Sreshta on GCP (manual console)
 
 No Terraform. Create each product in the Google Cloud console, then build and push the two Docker images from this repo.
 
@@ -8,12 +8,12 @@ No Terraform. Create each product in the Google Cloud console, then build and pu
 
 | Resource | Name |
 | --- | --- |
-| Cloud SQL instance | `anagha-pg` |
-| Database | `anagha` |
-| GCS bucket | `anagha-website-assets` (must be globally unique; add a suffix if taken) |
-| Artifact Registry repo | `anagha` |
-| Cloud Run (API) | `anagha-backend` |
-| Cloud Run (site) | `anagha-frontend` |
+| Cloud SQL instance | `sreshta-pg` |
+| Database | `sreshta` |
+| GCS bucket | `sreshta-website-assets` (must be globally unique; add a suffix if taken) |
+| Artifact Registry repo | `sreshta` |
+| Cloud Run (API) | `sreshta-backend` |
+| Cloud Run (site) | `sreshta-frontend` |
 
 Replace `YOUR_PROJECT_ID` everywhere below.
 
@@ -21,28 +21,28 @@ Replace `YOUR_PROJECT_ID` everywhere below.
 
 ## Live production snapshot
 
-Project: **`anagha-jewellers`** · Region: **`asia-south1`**
+Project: **`sreshta-jewellers`** · Region: **`asia-south1`**
 
 | Resource | Value |
 | --- | --- |
-| Cloud SQL connection name | `anagha-jewellers:asia-south1:anagha-pg` |
-| Database | `anagha` |
-| GCS bucket | `gs://anagha-website-assets` (public `allUsers` objectViewer) |
-| Backend Cloud Run | `anagha-backend` → `https://anagha-backend-jc4alta5gq-el.a.run.app` (also `…-646499775904.asia-south1.run.app`) |
-| Frontend Cloud Run | `anagha-frontend` → `https://anagha-frontend-646499775904.asia-south1.run.app` |
-| Public site | `https://anaghajewellers.com` / `https://www.anaghajewellers.com` |
-| Public API | `https://api.anaghajewellers.com` |
+| Cloud SQL connection name | `sreshta-jewellers:asia-south1:sreshta-pg` |
+| Database | `sreshta` |
+| GCS bucket | `gs://sreshta-website-assets` (public `allUsers` objectViewer) |
+| Backend Cloud Run | `sreshta-backend` → `https://sreshta-backend-jc4alta5gq-el.a.run.app` (also `…-646499775904.asia-south1.run.app`) |
+| Frontend Cloud Run | `sreshta-frontend` → `https://sreshta-frontend-646499775904.asia-south1.run.app` |
+| Public site | `https://sreshtajewellers.com` / `https://www.sreshtajewellers.com` |
+| Public API | `https://api.sreshtajewellers.com` |
 | DNS / TLS edge | Cloudflare (proxied CNAMEs + **Worker** host rewrite — see §13) |
 | Data | Neon dump restored into Cloud SQL (`cached_catalog_items` ~1600 rows) |
 
 **Verified smoke (public):**
 
-- `GET https://api.anaghajewellers.com/health` → `{"ok":true,"service":"anagha-backend"}`
-- `GET https://api.anaghajewellers.com/api/catalog?limit=1` → catalog JSON from Cloud SQL
-- `GET https://anaghajewellers.com` / `www` → Next.js **200**
+- `GET https://api.sreshtajewellers.com/health` → `{"ok":true,"service":"sreshta-backend"}`
+- `GET https://api.sreshtajewellers.com/api/catalog?limit=1` → catalog JSON from Cloud SQL
+- `GET https://sreshtajewellers.com` / `www` → Next.js **200**
 - Nameservers → `clara.ns.cloudflare.com` / `jonah.ns.cloudflare.com`
 
-**Known follow-up:** `GET https://anaghajewellers.com/api/...` can **500** until the frontend image is **rebuilt** with `BACKEND_URL=https://api.anaghajewellers.com` (Next rewrites bake that URL at build time; runtime env alone is not enough). Direct `api.` host works.
+**Known follow-up:** `GET https://sreshtajewellers.com/api/...` can **500** until the frontend image is **rebuilt** with `BACKEND_URL=https://api.sreshtajewellers.com` (Next rewrites bake that URL at build time; runtime env alone is not enough). Direct `api.` host works.
 
 ---
 
@@ -88,7 +88,7 @@ Console: **SQL → Create instance**
 | Setting | Value |
 | --- | --- |
 | Database engine | PostgreSQL **16** (or **18** — both fine with this app) |
-| Instance ID | `anagha-pg` |
+| Instance ID | `sreshta-pg` |
 | Password | generate a strong password and save it |
 | Region | `asia-south1` |
 | Zonal availability | Single zone is enough to start |
@@ -99,14 +99,14 @@ Console: **SQL → Create instance**
 
 After the instance is ready:
 
-1. **Databases → Create database** named `anagha`.
-2. **Users** — keep the default postgres user, or create `anagha_app` with a password.
-3. Copy **Connection name**: `YOUR_PROJECT_ID:asia-south1:anagha-pg`.
+1. **Databases → Create database** named `sreshta`.
+2. **Users** — keep the default postgres user, or create `sreshta_app` with a password.
+3. Copy **Connection name**: `YOUR_PROJECT_ID:asia-south1:sreshta-pg`.
 
 ### Cloud Run connection string (Unix socket)
 
 ```
-postgresql://USER:PASSWORD@/anagha?host=/cloudsql/YOUR_PROJECT_ID:asia-south1:anagha-pg
+postgresql://USER:PASSWORD@/sreshta?host=/cloudsql/YOUR_PROJECT_ID:asia-south1:sreshta-pg
 ```
 
 URL-encode special characters in the password (`@`, `#`, `/`, etc.).
@@ -114,13 +114,13 @@ URL-encode special characters in the password (`@`, `#`, `/`, etc.).
 ### Laptop connection string (Auth Proxy on 127.0.0.1:5432)
 
 ```
-postgresql://USER:PASSWORD@127.0.0.1:5432/anagha
+postgresql://USER:PASSWORD@127.0.0.1:5432/sreshta
 ```
 
 Start the proxy in another terminal:
 
 ```powershell
-cloud-sql-proxy YOUR_PROJECT_ID:asia-south1:anagha-pg
+cloud-sql-proxy YOUR_PROJECT_ID:asia-south1:sreshta-pg
 ```
 
 ---
@@ -131,7 +131,7 @@ Console: **Cloud Storage → Create bucket**
 
 | Setting | Value |
 | --- | --- |
-| Name | `anagha-website-assets` (or unique variant) |
+| Name | `sreshta-website-assets` (or unique variant) |
 | Location | Region `asia-south1` |
 | Storage class | Standard |
 | Access control | **Uniform** |
@@ -140,7 +140,7 @@ Console: **Cloud Storage → Create bucket**
 Public read (console: bucket **Permissions**, or):
 
 ```powershell
-gcloud storage buckets add-iam-policy-binding gs://anagha-website-assets `
+gcloud storage buckets add-iam-policy-binding gs://sreshta-website-assets `
   --member=allUsers `
   --role=roles/storage.objectViewer
 ```
@@ -151,9 +151,9 @@ Optional CORS (only if the browser loads objects directly and you see CORS error
 
 ```powershell
 @"
-[{"origin":["https://anaghajewellers.com","https://www.anaghajewellers.com","http://localhost:3000"],"method":["GET","HEAD"],"responseHeader":["Content-Type"],"maxAgeSeconds":3600}]
+[{"origin":["https://sreshtajewellers.com","https://www.sreshtajewellers.com","http://localhost:3000"],"method":["GET","HEAD"],"responseHeader":["Content-Type"],"maxAgeSeconds":3600}]
 "@ | Set-Content -Encoding utf8 cors.json
-gsutil cors set cors.json gs://anagha-website-assets
+gsutil cors set cors.json gs://sreshta-website-assets
 ```
 
 Do **not** put service-account JSON keys in Cloud Run env. The Cloud Run runtime account writes to the bucket (next section).
@@ -166,7 +166,7 @@ Console: **Artifact Registry → Create repository**
 
 | Setting | Value |
 | --- | --- |
-| Name | `anagha` |
+| Name | `sreshta` |
 | Format | Docker |
 | Mode | Standard |
 | Location | `asia-south1` |
@@ -174,8 +174,8 @@ Console: **Artifact Registry → Create repository**
 Image URLs will be:
 
 ```
-asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/backend:latest
-asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/frontend:latest
+asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/backend:latest
+asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/frontend:latest
 ```
 
 ---
@@ -196,7 +196,7 @@ Grant:
 | **Storage Object Admin** | Upload CMS + catalog images to the bucket |
 
 ```powershell
-gcloud projects add-iam-policy-binding anagha-jewellers `
+gcloud projects add-iam-policy-binding sreshta-jewellers `
   --member="serviceAccount:PROJECT_NUMBER-compute@developer.gserviceaccount.com" `
   --role="roles/cloudsql.client"
 ```
@@ -212,7 +212,7 @@ Optional: **Secret Manager Secret Accessor** if you store DB/Razorpay/SMTP secre
 From the repo root (after you have local `backend/uploads`):
 
 ```powershell
-gsutil -m rsync -r backend/uploads gs://anagha-website-assets
+gsutil -m rsync -r backend/uploads gs://sreshta-website-assets
 ```
 
 Existing CMS rows that store a bare filename (`hero.jpg`) still resolve to `/uploads/hero.jpg` via the frontend helper. After you set `GCS_BUCKET`, **new** uploads store a full `https://storage.googleapis.com/...` URL.
@@ -221,8 +221,8 @@ Catalog photos that still point at foreign ERP/Supabase URLs can be copied later
 
 ```powershell
 cd backend
-$env:DATABASE_URL = "postgresql://USER:PASSWORD@127.0.0.1:5432/anagha"
-$env:GCS_BUCKET = "anagha-website-assets"
+$env:DATABASE_URL = "postgresql://USER:PASSWORD@127.0.0.1:5432/sreshta"
+$env:GCS_BUCKET = "sreshta-website-assets"
 $env:GCS_MAKE_PUBLIC = "true"
 npx tsx src/scripts/relocateCatalogImages.ts
 ```
@@ -235,20 +235,20 @@ With Cloud SQL Auth Proxy running (and `pg_dump` / `pg_restore` on `PATH` — on
 
 ```powershell
 # Dump Neon (use your current Neon URL; prefer non-pooler host if dump fails)
-pg_dump --no-owner --no-acl -Fc -f anagha.dump "postgresql://neondb_owner:PASSWORD@HOST/neondb?sslmode=require"
+pg_dump --no-owner --no-acl -Fc -f sreshta.dump "postgresql://neondb_owner:PASSWORD@HOST/neondb?sslmode=require"
 
-# Prefer an EMPTY database. If you already ran db:migrate, drop/recreate `anagha` first
+# Prefer an EMPTY database. If you already ran db:migrate, drop/recreate `sreshta` first
 # so pg_restore does not hit "already exists" / duplicate-key noise.
 
 # Restore into Cloud SQL (proxy on 5432)
-pg_restore --no-owner --no-acl -d "postgresql://USER:PASSWORD@127.0.0.1:5432/anagha" anagha.dump
+pg_restore --no-owner --no-acl -d "postgresql://USER:PASSWORD@127.0.0.1:5432/sreshta" sreshta.dump
 ```
 
 Then apply any newer schema statements:
 
 ```powershell
 cd backend
-$env:DATABASE_URL = "postgresql://USER:PASSWORD@127.0.0.1:5432/anagha"
+$env:DATABASE_URL = "postgresql://USER:PASSWORD@127.0.0.1:5432/sreshta"
 npm run db:migrate
 ```
 
@@ -257,7 +257,7 @@ Skip `db:seed` if you restored real data.
 Quick row check:
 
 ```powershell
-psql "postgresql://USER:PASSWORD@127.0.0.1:5432/anagha" -c "SELECT count(*) FROM cached_catalog_items;"
+psql "postgresql://USER:PASSWORD@127.0.0.1:5432/sreshta" -c "SELECT count(*) FROM cached_catalog_items;"
 ```
 
 ---
@@ -267,21 +267,21 @@ psql "postgresql://USER:PASSWORD@127.0.0.1:5432/anagha" -c "SELECT count(*) FROM
 From the **repo root**. Build backend first (no frontend URL required).
 
 ```powershell
-docker build -t asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/backend:latest .\backend
-docker push asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/backend:latest
+docker build -t asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/backend:latest .\backend
+docker push asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/backend:latest
 ```
 
 Deploy backend (next section), copy its `*.run.app` URL, then build frontend **with that URL**:
 
 ```powershell
 docker build `
-  --build-arg BACKEND_URL=https://anagha-backend-xxxxx.asia-south1.run.app `
-  --build-arg NEXT_PUBLIC_BASE_URL=https://anagha-frontend-xxxxx.asia-south1.run.app `
+  --build-arg BACKEND_URL=https://sreshta-backend-xxxxx.asia-south1.run.app `
+  --build-arg NEXT_PUBLIC_BASE_URL=https://sreshta-frontend-xxxxx.asia-south1.run.app `
   --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID `
-  -t asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/frontend:latest `
+  -t asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/frontend:latest `
   .\frontend
 
-docker push asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/frontend:latest
+docker push asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/frontend:latest
 ```
 
 `BACKEND_URL` is compiled into Next.js rewrites. If the backend URL changes, rebuild and redeploy the frontend.
@@ -296,9 +296,9 @@ Console: **Cloud Run → Create service** (or deploy from the image you pushed).
 
 | Setting | Value |
 | --- | --- |
-| Service name | `anagha-backend` |
+| Service name | `sreshta-backend` |
 | Region | `asia-south1` |
-| Deploy from | Artifact Registry image `.../anagha/backend:latest` |
+| Deploy from | Artifact Registry image `.../sreshta/backend:latest` |
 | Port | **8080** |
 | CPU / memory | 1 vCPU, 512 MiB (raise to 1 GiB if ERP import OOMs) |
 | Min instances | 0 (or 1 if you want no cold start) |
@@ -307,7 +307,7 @@ Console: **Cloud Run → Create service** (or deploy from the image you pushed).
 | CPU allocation | CPU is only allocated during request processing |
 | Ingress | All (or Load Balancer later) |
 | Authentication | **Allow unauthenticated** (public storefront API via the Next proxy) |
-| Cloud SQL connections | Add `YOUR_PROJECT_ID:asia-south1:anagha-pg` |
+| Cloud SQL connections | Add `YOUR_PROJECT_ID:asia-south1:sreshta-pg` |
 | Service account | default compute SA (with the IAM roles above) |
 
 Health check path: `/health` (startup probe).
@@ -321,11 +321,11 @@ Health check path: `/health` (startup probe).
 | `DATABASE_URL` | Unix socket URL from section 3 |
 | `SESSION_SECRET` | ≥16 random chars |
 | `COOKIE_SECURE` | `true` |
-| `CORS_ORIGIN` | `https://anaghajewellers.com\,https://www.anaghajewellers.com` (escape `,` as `\,` for `gcloud --update-env-vars`) |
-| `PUBLIC_BASE_URL` | **frontend** public URL (`https://anaghajewellers.com`) |
-| `PUBLIC_API_BASE_URL` | **backend** public URL (`https://api.anaghajewellers.com`) |
-| `GCS_BUCKET` | `anagha-website-assets` |
-| `GCS_PUBLIC_BASE_URL` | `https://storage.googleapis.com/anagha-website-assets` |
+| `CORS_ORIGIN` | `https://sreshtajewellers.com\,https://www.sreshtajewellers.com` (escape `,` as `\,` for `gcloud --update-env-vars`) |
+| `PUBLIC_BASE_URL` | **frontend** public URL (`https://sreshtajewellers.com`) |
+| `PUBLIC_API_BASE_URL` | **backend** public URL (`https://api.sreshtajewellers.com`) |
+| `GCS_BUCKET` | `sreshta-website-assets` |
+| `GCS_PUBLIC_BASE_URL` | `https://storage.googleapis.com/sreshta-website-assets` |
 | `GCS_PROJECT_ID` | `YOUR_PROJECT_ID` |
 | `GCS_MAKE_PUBLIC` | `true` |
 | `ERP_API_URL` | existing ERP Cloud Run `/api` |
@@ -342,13 +342,13 @@ Do **not** set `GCS_CLIENT_EMAIL` or `GCS_PRIVATE_KEY` on Cloud Run.
 gcloud equivalent (after the first console create, updates are easier from CLI):
 
 ```powershell
-gcloud run deploy anagha-backend `
+gcloud run deploy sreshta-backend `
   --region asia-south1 `
-  --image asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/anagha/backend:latest `
+  --image asia-south1-docker.pkg.dev/YOUR_PROJECT_ID/sreshta/backend:latest `
   --port 8080 `
   --allow-unauthenticated `
-  --add-cloudsql-instances YOUR_PROJECT_ID:asia-south1:anagha-pg `
-  --set-env-vars "NODE_ENV=production,COOKIE_SECURE=true,GCS_BUCKET=anagha-website-assets,GCS_MAKE_PUBLIC=true"
+  --add-cloudsql-instances YOUR_PROJECT_ID:asia-south1:sreshta-pg `
+  --set-env-vars "NODE_ENV=production,COOKIE_SECURE=true,GCS_BUCKET=sreshta-website-assets,GCS_MAKE_PUBLIC=true"
 ```
 
 Prefer `--set-secrets` / console **Secrets** for `DATABASE_URL`, `SESSION_SECRET`, `RAZORPAY_KEY_SECRET`, `SMTP_PASS`.
@@ -356,19 +356,19 @@ Prefer `--set-secrets` / console **Secrets** for `DATABASE_URL`, `SESSION_SECRET
 Smoke (PowerShell: use `curl.exe`, not the `curl` alias):
 
 ```powershell
-curl.exe -s https://api.anaghajewellers.com/health
-curl.exe -s "https://api.anaghajewellers.com/api/catalog?limit=2"
+curl.exe -s https://api.sreshtajewellers.com/health
+curl.exe -s "https://api.sreshtajewellers.com/api/catalog?limit=2"
 ```
 
-Expect `{"ok":true,"service":"anagha-backend"}` and catalog JSON.
+Expect `{"ok":true,"service":"sreshta-backend"}` and catalog JSON.
 
 Update backend env after custom domains (note `\,` in `CORS_ORIGIN`):
 
 ```powershell
-gcloud run services update anagha-backend `
+gcloud run services update sreshta-backend `
   --region=asia-south1 `
-  --add-cloudsql-instances=anagha-jewellers:asia-south1:anagha-pg `
-  --update-env-vars="COOKIE_SECURE=true,CORS_ORIGIN=https://anaghajewellers.com\,https://www.anaghajewellers.com,PUBLIC_BASE_URL=https://anaghajewellers.com,PUBLIC_API_BASE_URL=https://api.anaghajewellers.com,GCS_BUCKET=anagha-website-assets,GCS_PUBLIC_BASE_URL=https://storage.googleapis.com/anagha-website-assets,GCS_PROJECT_ID=anagha-jewellers,GCS_MAKE_PUBLIC=true"
+  --add-cloudsql-instances=sreshta-jewellers:asia-south1:sreshta-pg `
+  --update-env-vars="COOKIE_SECURE=true,CORS_ORIGIN=https://sreshtajewellers.com\,https://www.sreshtajewellers.com,PUBLIC_BASE_URL=https://sreshtajewellers.com,PUBLIC_API_BASE_URL=https://api.sreshtajewellers.com,GCS_BUCKET=sreshta-website-assets,GCS_PUBLIC_BASE_URL=https://storage.googleapis.com/sreshta-website-assets,GCS_PROJECT_ID=sreshta-jewellers,GCS_MAKE_PUBLIC=true"
 ```
 
 ---
@@ -377,9 +377,9 @@ gcloud run services update anagha-backend `
 
 | Setting | Value |
 | --- | --- |
-| Service name | `anagha-frontend` |
+| Service name | `sreshta-frontend` |
 | Region | `asia-south1` |
-| Image | `.../anagha/frontend:latest` |
+| Image | `.../sreshta/frontend:latest` |
 | Port | **8080** |
 | CPU / memory | 1 vCPU, 512 MiB–1 GiB |
 | Authentication | **Allow unauthenticated** |
@@ -389,42 +389,42 @@ gcloud run services update anagha-backend `
 | Variable | Why |
 | --- | --- |
 | `BACKEND_URL` | SSR `fetch` + must match Docker **build-arg** for Next rewrites |
-| `NEXT_PUBLIC_BASE_URL` | public site origin (`https://anaghajewellers.com`) |
+| `NEXT_PUBLIC_BASE_URL` | public site origin (`https://sreshtajewellers.com`) |
 
 ```powershell
-gcloud run services update anagha-frontend `
+gcloud run services update sreshta-frontend `
   --region=asia-south1 `
-  --update-env-vars="BACKEND_URL=https://api.anaghajewellers.com,NEXT_PUBLIC_BASE_URL=https://anaghajewellers.com"
+  --update-env-vars="BACKEND_URL=https://api.sreshtajewellers.com,NEXT_PUBLIC_BASE_URL=https://sreshtajewellers.com"
 ```
 
 Rebuild when `BACKEND_URL` changes (rewrites are compile-time):
 
 ```powershell
 docker build `
-  --build-arg BACKEND_URL=https://api.anaghajewellers.com `
-  --build-arg NEXT_PUBLIC_BASE_URL=https://anaghajewellers.com `
-  -t asia-south1-docker.pkg.dev/anagha-jewellers/cloud-run-source-deploy/anagha-website/anagha-frontend:latest `
+  --build-arg BACKEND_URL=https://api.sreshtajewellers.com `
+  --build-arg NEXT_PUBLIC_BASE_URL=https://sreshtajewellers.com `
+  -t asia-south1-docker.pkg.dev/sreshta-jewellers/cloud-run-source-deploy/sreshta-website/sreshta-frontend:latest `
   .\frontend
 ```
 
-Open the site. The browser uses `anaghajewellers.com`; Next can proxy `/api/*` and `/uploads/*` to the backend once rewrites point at `https://api.anaghajewellers.com`.
+Open the site. The browser uses `sreshtajewellers.com`; Next can proxy `/api/*` and `/uploads/*` to the backend once rewrites point at `https://api.sreshtajewellers.com`.
 
 ---
 
 ## 12. Smoke tests
 
 ```powershell
-curl.exe -s https://api.anaghajewellers.com/health
-curl.exe -s "https://api.anaghajewellers.com/api/catalog?limit=2"
-curl.exe -sI https://anaghajewellers.com
-curl.exe -sI https://www.anaghajewellers.com
-curl.exe -sI "https://anaghajewellers.com/api/catalog?limit=1"   # needs rebuilt frontend
+curl.exe -s https://api.sreshtajewellers.com/health
+curl.exe -s "https://api.sreshtajewellers.com/api/catalog?limit=2"
+curl.exe -sI https://sreshtajewellers.com
+curl.exe -sI https://www.sreshtajewellers.com
+curl.exe -sI "https://sreshtajewellers.com/api/catalog?limit=1"   # needs rebuilt frontend
 ```
 
 Manual:
 
 1. Homepage loads (hero, categories, offers)
-2. Sign up / login (cookie on `anaghajewellers.com`)
+2. Sign up / login (cookie on `sreshtajewellers.com`)
 3. Admin `/upload` — upload image; object appears in GCS and storefront shows it
 4. Catalog listing + product page
 5. Checkout (Razorpay test card) if keys are set
@@ -438,9 +438,9 @@ Cloud Run **domain mapping** is optional. This project uses **Cloudflare Free** 
 
 | Host | DNS | Proxy |
 | --- | --- | --- |
-| `anaghajewellers.com` | CNAME → `anagha-frontend-….run.app` | Proxied |
+| `sreshtajewellers.com` | CNAME → `sreshta-frontend-….run.app` | Proxied |
 | `www` | CNAME → same frontend | Proxied |
-| `api` | CNAME → `anagha-backend-….run.app` | Proxied |
+| `api` | CNAME → `sreshta-backend-….run.app` | Proxied |
 
 CNAME **target = hostname only** (no `https://`).
 
@@ -448,29 +448,29 @@ Registrar nameservers must be Cloudflare (`clara` / `jonah.ns.cloudflare.com`), 
 
 ### Why a Worker is required (Free plan)
 
-A proxied CNAME alone sends `Host: anaghajewellers.com` to Cloud Run → Google **404**. Origin Rule **Host header rewrite** is not available on Free. Use a **Worker** that `fetch`es the `*.run.app` origin (correct Host) while the browser URL stays on your domain.
+A proxied CNAME alone sends `Host: sreshtajewellers.com` to Cloud Run → Google **404**. Origin Rule **Host header rewrite** is not available on Free. Use a **Worker** that `fetch`es the `*.run.app` origin (correct Host) while the browser URL stays on your domain.
 
 Worker routes (minimum):
 
 ```text
-anaghajewellers.com/*
-www.anaghajewellers.com/*
-api.anaghajewellers.com/*
+sreshtajewellers.com/*
+www.sreshtajewellers.com/*
+api.sreshtajewellers.com/*
 ```
 
-(`*.anaghajewellers.com/*` alone does **not** cover the apex.)
+(`*.sreshtajewellers.com/*` alone does **not** cover the apex.)
 
 Sketch (site + API in one Worker):
 
 ```js
-const FRONTEND = "anagha-frontend-646499775904.asia-south1.run.app";
-const BACKEND = "anagha-backend-jc4alta5gq-el.a.run.app";
+const FRONTEND = "sreshta-frontend-646499775904.asia-south1.run.app";
+const BACKEND = "sreshta-backend-jc4alta5gq-el.a.run.app";
 
 export default {
   async fetch(request) {
     const incoming = new URL(request.url);
     const originHost =
-      incoming.hostname === "api.anaghajewellers.com" ? BACKEND : FRONTEND;
+      incoming.hostname === "api.sreshtajewellers.com" ? BACKEND : FRONTEND;
     const url = new URL(request.url);
     url.hostname = originHost;
     const init = { method: request.method, headers: request.headers, redirect: "manual" };
@@ -488,7 +488,7 @@ Cloudflare **SSL/TLS**: Full or Full strict. Do **not** use a Redirect Rule to `
 After DNS + Worker:
 
 1. Set backend `CORS_ORIGIN`, `PUBLIC_BASE_URL`, `PUBLIC_API_BASE_URL` (see §10)
-2. Rebuild frontend with `BACKEND_URL=https://api.anaghajewellers.com`
+2. Rebuild frontend with `BACKEND_URL=https://api.sreshtajewellers.com`
 3. Update Google OAuth authorized origins / redirect URIs
 4. Update Razorpay allowed URLs if required
 
@@ -499,7 +499,7 @@ Alternatives: Cloud Run domain mapping + `ghs.googlehosted.com`, or GCP HTTPS Lo
 ## 14. Cut over from Vercel + Render
 
 1. Confirm GCP site works end-to-end (including `/api` after frontend rebuild)
-2. Keep Cloudflare DNS on Cloud Run (already done for `anaghajewellers.com`)
+2. Keep Cloudflare DNS on Cloud Run (already done for `sreshtajewellers.com`)
 3. Disable or delete the Render backend (`render.yaml` is unused after cutover)
 4. Remove the Vercel project
 5. Keep Neon read-only for a few days, then delete
@@ -551,12 +551,12 @@ Workflow: [`.github/workflows/deploy-gcp.yml`](../.github/workflows/deploy-gcp.y
 Replace `GITHUB_ORG` / `GITHUB_REPO` with your GitHub org/user and repo name.
 
 ```powershell
-$PROJECT_ID = "anagha-jewellers"
+$PROJECT_ID = "sreshta-jewellers"
 $PROJECT_NUMBER = (gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
 $POOL = "github-pool"
 $PROVIDER = "github-provider"
 $SA = "github-deploy@$PROJECT_ID.iam.gserviceaccount.com"
-$REPO = "GITHUB_ORG/GITHUB_REPO"   # e.g. anaghajewellers/anagha-website
+$REPO = "GITHUB_ORG/GITHUB_REPO"   # e.g. sreshtajewellers/sreshta-website
 
 gcloud services enable iamcredentials.googleapis.com sts.googleapis.com artifactregistry.googleapis.com run.googleapis.com
 
@@ -600,10 +600,10 @@ Write-Host "Set GitHub secret GCP_SERVICE_ACCOUNT = $SA"
 | Name | Type | Example value |
 | --- | --- | --- |
 | `GCP_WORKLOAD_IDENTITY_PROVIDER` | Secret | `projects/646499775904/locations/global/workloadIdentityPools/github-pool/providers/github-provider` |
-| `GCP_SERVICE_ACCOUNT` | Secret | `github-deploy@anagha-jewellers.iam.gserviceaccount.com` |
-| `GCP_PROJECT_ID` | Variable | `anagha-jewellers` |
-| `BACKEND_URL` | Variable | `https://api.anaghajewellers.com` |
-| `NEXT_PUBLIC_BASE_URL` | Variable | `https://anaghajewellers.com` |
+| `GCP_SERVICE_ACCOUNT` | Secret | `github-deploy@sreshta-jewellers.iam.gserviceaccount.com` |
+| `GCP_PROJECT_ID` | Variable | `sreshta-jewellers` |
+| `BACKEND_URL` | Variable | `https://api.sreshtajewellers.com` |
+| `NEXT_PUBLIC_BASE_URL` | Variable | `https://sreshtajewellers.com` |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Variable (optional but recommended) | OAuth web client ID — **must be a build-arg**; empty value can break the login page in some browsers |
 
 Then run **Actions → Deploy GCP → Run workflow**, or push to **`master`** under `frontend/` / `backend/` (auto build + deploy).
@@ -611,7 +611,7 @@ Then run **Actions → Deploy GCP → Run workflow**, or push to **`master`** un
 After a successful frontend deploy:
 
 ```powershell
-curl.exe -sI https://anaghajewellers.com/api/auth/me
+curl.exe -sI https://sreshtajewellers.com/api/auth/me
 # expect 401 from Express, not 500 HTML
 ```
 

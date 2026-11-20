@@ -25,7 +25,7 @@ async function sendHtmlMail(to: string, subject: string, html: string, kind: str
   }
   try {
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || '"Anagha Jewellers" <invoices@anaghajewellers.com>',
+      from: process.env.MAIL_FROM || '"Sreshta Jewellers" <invoices@sreshtajewellers.com>',
       to,
       subject,
       html,
@@ -55,9 +55,9 @@ export async function sendOrderInvoice(session: any, items: any[]) {
 
   try {
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || '"Anagha Jewellers" <invoices@anaghajewellers.com>',
+      from: process.env.MAIL_FROM || '"Sreshta Jewellers" <invoices@sreshtajewellers.com>',
       to: session.customerEmail,
-      subject: `Order Invoice from Anagha Jewellers (#${billNo})`,
+      subject: `Order Invoice from Sreshta Jewellers (#${billNo})`,
       html,
       attachments: [
         {
@@ -102,14 +102,14 @@ export async function sendSupportQueryEmail(payload: { name: string; email: stri
   }
 
   const date = new Date().toLocaleString('en-IN');
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://anaghajewellers.com';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://sreshtajewellers.com';
 
   const html = `
     <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
       <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-top: 4px solid #f1592a; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         
         <div style="text-align: center; margin-bottom: 20px;">
-          <img src="${apiUrl}/images/logo.png" alt="Anagha Jewellers Logo" style="max-height: 50px;" />
+          <img src="${apiUrl}/images/logo.png" alt="Sreshta Jewellers Logo" style="max-height: 50px;" />
         </div>
 
         <h2 style="color: #032C5E; border-bottom: 1px solid #eee; padding-bottom: 10px;">New Contact Form Query</h2>
@@ -140,7 +140,7 @@ export async function sendSupportQueryEmail(payload: { name: string; email: stri
         </table>
         
         <div style="margin-top: 30px; font-size: 12px; color: #888; text-align: center;">
-          This is an automated notification from Anagha Jewellers Website.
+          This is an automated notification from Sreshta Jewellers Website.
         </div>
       </div>
     </div>
@@ -148,7 +148,7 @@ export async function sendSupportQueryEmail(payload: { name: string; email: stri
 
   try {
     await transporter.sendMail({
-      from: process.env.MAIL_FROM || '"Anagha Jewellers" <invoices@anaghajewellers.com>',
+      from: process.env.MAIL_FROM || '"Sreshta Jewellers" <invoices@sreshtajewellers.com>',
       to: targetEmail,
       replyTo: payload.email,
       subject: `New Contact Form Query from ${payload.name || 'Customer'}`,

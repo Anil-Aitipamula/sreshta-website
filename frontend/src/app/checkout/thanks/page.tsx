@@ -6,7 +6,7 @@ import CheckoutThanks from '@/components/CheckoutThanks';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Order confirmed | Anagha',
+  title: 'Order confirmed | Sreshta',
 };
 
 export default function CheckoutThanksPage() {

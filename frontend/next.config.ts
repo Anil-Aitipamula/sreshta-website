@@ -10,14 +10,14 @@ function resolveBackendUrl(): string {
   }
 
   throw new Error(
-    `BACKEND_URL must be a full URL starting with http:// or https:// (e.g. https://anagha-backend-xxxxx.asia-south1.run.app). Current value: "${raw}"`
+    `BACKEND_URL must be a full URL starting with http:// or https:// (e.g. https://sreshta-backend-xxxxx.asia-south1.run.app). Current value: "${raw}"`
   );
 }
 
 const BACKEND_URL = resolveBackendUrl();
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  output: process.env.VERCEL ? undefined : 'standalone',
   allowedDevOrigins: ['192.168.1.38'],
   images: {
     remotePatterns: [

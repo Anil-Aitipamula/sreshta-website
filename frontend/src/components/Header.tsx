@@ -423,7 +423,7 @@ export default function Header() {
           <Link href="/" className="flex items-center justify-center min-w-0 px-1">
             <Image
               src={logoUrl}
-              alt="Anagha"
+              alt="Sreshta"
               width={120}
               height={40}
               className="h-8 sm:h-10 w-auto max-w-[140px] sm:max-w-[180px] object-contain [clip-path:inset(1px_4px)]"
@@ -503,7 +503,7 @@ export default function Header() {
           <div className="flex items-center justify-between p-4 border-b border-gray-300">
             <Image
               src={logoUrl}
-              alt="Anagha"
+              alt="Sreshta"
               width={120}
               height={40}
               className="h-10 w-auto object-contain [clip-path:inset(1px_4px)]"
@@ -601,7 +601,7 @@ export default function Header() {
           <Link href="/" className="flex items-center shrink-0 translate-y-2.5">
             <Image
               src={logoUrl}
-              alt="Anagha"
+              alt="Sreshta"
               width={280}
               height={80}
               className="h-[50px] xl:h-[60px] w-auto object-contain [clip-path:inset(1px_4px)]"
@@ -748,7 +748,7 @@ export default function Header() {
         >
           <Image
             src={logoIconUrl}
-            alt="Anagha"
+            alt="Sreshta"
             width={75}
             height={75}
             className="w-full h-full object-contain [clip-path:circle(47%)] scale-[0.85]"

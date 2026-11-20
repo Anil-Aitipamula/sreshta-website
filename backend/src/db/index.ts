@@ -6,14 +6,21 @@ import * as schema from './schema.js';
 const connectionString = String(process.env.DATABASE_URL || '').trim();
 if (!connectionString) {
   console.error(
-    '[db] DATABASE_URL is not set. Add it on Cloud Run → Edit & deploy → Variables. The process will still listen on PORT.',
+    '[db] DATABASE_URL is not set. The process will still listen on PORT.',
   );
 }
+
+const isSsl =
+  connectionString.includes('sslmode=require') ||
+  connectionString.includes('neon.tech') ||
+  connectionString.includes('supabase') ||
+  connectionString.includes('render.com');
 
 export const pool = new Pool({
   connectionString: connectionString || 'postgresql://127.0.0.1:9/unset',
   max: 10,
   connectionTimeoutMillis: 10_000,
+  ssl: isSsl ? { rejectUnauthorized: false } : undefined,
 });
 
 export const db = drizzle(pool, { schema });

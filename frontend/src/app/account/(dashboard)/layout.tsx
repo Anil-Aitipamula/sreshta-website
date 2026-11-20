@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'My Account | Anagha',
+  title: 'My Account | Sreshta',
 };
 
 export default function AccountDashboardLayout({ children }: { children: React.ReactNode }) {

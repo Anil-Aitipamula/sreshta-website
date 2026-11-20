@@ -4,7 +4,7 @@ import AccountAddress from '@/components/AccountAddress';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Shipping Address | Anagha',
+  title: 'Shipping Address | Sreshta',
 };
 
 export default function AccountAddressPage() {

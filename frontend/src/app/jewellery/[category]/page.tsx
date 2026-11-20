@@ -6,7 +6,7 @@ console.log('generateMetadata run'); export async function generateMetadata({ pa
   const { category } = await params;
   const title = category.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
   return {
-    title: `${title} | Anagha`,
+    title: `${title} | Sreshta`,
     description: `Shop our exclusive ${title} collection from live store inventory.`,
   };
 }

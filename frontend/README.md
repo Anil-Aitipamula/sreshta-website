@@ -1,6 +1,6 @@
-# Anagha Frontend
+# Sreshta Frontend
 
-Next.js app for the Anagha jewellery website and `/upload` admin UI.
+Next.js app for the Sreshta jewellery website and `/upload` admin UI.
 
 API calls to `/api/upload/*` and `/uploads/*` are proxied to the Express backend via `next.config.ts` (`BACKEND_URL`).
 

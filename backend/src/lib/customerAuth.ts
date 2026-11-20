@@ -5,7 +5,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '../db/index.js';
 import { websiteCustomers } from '../db/schema.js';
 
-export const SESSION_COOKIE = 'anagha_customer';
+export const SESSION_COOKIE = 'sreshta_customer';
 const SESSION_DAYS = 30;
 
 export type PublicCustomer = {

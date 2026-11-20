@@ -7,6 +7,19 @@ function trimSlash(url: string) {
   return url.replace(/\/+$/, '');
 }
 
+export function supabaseBucketName() {
+  return String(process.env.SUPABASE_STORAGE_BUCKET || 'sreshta-assets').trim();
+}
+
+export function supabaseStorageConfigured() {
+  return Boolean(
+    process.env.SUPABASE_URL &&
+      (process.env.SUPABASE_SERVICE_ROLE_KEY ||
+        process.env.SUPABASE_ANON_KEY ||
+        process.env.SUPABASE_KEY)
+  );
+}
+
 export function gcsBucketName() {
   return String(process.env.GCS_BUCKET || '').trim();
 }
@@ -16,6 +29,10 @@ export function gcsConfigured() {
 }
 
 export function publicAssetBase() {
+  if (supabaseStorageConfigured()) {
+    const sbUrl = trimSlash(process.env.SUPABASE_URL!);
+    return `${sbUrl}/storage/v1/object/public/${supabaseBucketName()}`;
+  }
   const explicit = String(process.env.GCS_PUBLIC_BASE_URL || '').trim();
   if (explicit) return trimSlash(explicit);
   const bucket = gcsBucketName();
@@ -28,6 +45,7 @@ export function isManagedAssetUrl(url: string) {
   if (!value) return false;
   if (value.startsWith('/uploads/') || value.startsWith('/images/')) return true;
   if (value.startsWith('data:') || value.startsWith('blob:')) return true;
+  if (value.includes('/storage/v1/object/public/')) return true;
   const gcsBase = publicAssetBase();
   if (gcsBase && value.startsWith(gcsBase)) return true;
   const bucket = gcsBucketName();
@@ -56,10 +74,7 @@ export function isForeignImageUrl(url: string) {
   if (!isForeignAssetUrl(url)) return false;
   const value = url.toLowerCase();
   return (
-    value.includes('supabase.co') ||
     value.includes('inventory-images') ||
-    value.includes('/storage/v1/object') ||
-    value.includes('octis.') ||
     value.includes('gold-develop') ||
     value.includes('run.app') ||
     /\.(avif|gif|jpe?g|png|webp)(\?|$)/i.test(value)
@@ -91,6 +106,35 @@ function gcsClient() {
 /** Store a public catalog/CMS file. Production uses GCS; local/dev can use /uploads. */
 export async function putPublicObject(relPath: string, buffer: Buffer, contentType = 'image/jpeg') {
   const rel = relPath.replace(/^\/+/, '').replace(/\\/g, '/');
+
+  if (supabaseStorageConfigured()) {
+    try {
+      const supabaseUrl = trimSlash(process.env.SUPABASE_URL!);
+      const bucket = supabaseBucketName();
+      const apiKey = (process.env.SUPABASE_SERVICE_ROLE_KEY ||
+        process.env.SUPABASE_ANON_KEY ||
+        process.env.SUPABASE_KEY)!;
+      const uploadUrl = `${supabaseUrl}/storage/v1/object/${encodeURIComponent(bucket)}/${rel}`;
+      const uploadRes = await fetch(uploadUrl, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          apikey: apiKey,
+          'Content-Type': contentType,
+          'x-upsert': 'true',
+        },
+        body: new Uint8Array(buffer),
+      });
+      if (uploadRes.ok) {
+        return `${supabaseUrl}/storage/v1/object/public/${encodeURIComponent(bucket)}/${rel}`;
+      }
+      const errText = await uploadRes.text().catch(() => '');
+      console.warn(`[storage] Supabase upload failed (${uploadRes.status}): ${errText}. Falling back to local.`);
+    } catch (err) {
+      console.warn('[storage] Supabase upload exception:', err);
+    }
+  }
+
   if (gcsConfigured()) {
     const bucketName = gcsBucketName();
     const file = gcsClient().bucket(bucketName).file(rel);

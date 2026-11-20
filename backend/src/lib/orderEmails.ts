@@ -16,7 +16,7 @@ function siteBase() {
     .split(',')
     .map((s) => s.trim())
     .find((s) => s.startsWith('http') && !s.includes('localhost'));
-  return String(fromCors || process.env.PUBLIC_BASE_URL || 'https://anaghajewellers.com')
+  return String(fromCors || process.env.PUBLIC_BASE_URL || 'https://sreshtajewellers.com')
     .trim()
     .replace(/\/+$/, '');
 }
@@ -28,7 +28,7 @@ export function orderNumber(session: Record<string, unknown>) {
     session.erpBillNumber ||
       session.erp_bill_number ||
       session.order_id ||
-      `AJ-${String(session.id || '').slice(0, 8).toUpperCase()}`,
+      `SJ-${String(session.id || '').slice(0, 8).toUpperCase()}`,
   );
 }
 
@@ -228,7 +228,7 @@ function shell(opts: { headerColor: string; accentBar: string; logoUrl: string; 
           <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;border:1px solid #efe8e2;">
             <tr>
               <td style="background:${opts.headerColor};padding:22px 28px;text-align:center;border-bottom:4px solid ${opts.accentBar};">
-                <img src="${escapeHtml(opts.logoUrl)}" alt="Anagha Jewellers" style="max-height:48px;max-width:220px;" />
+                <img src="${escapeHtml(opts.logoUrl)}" alt="Sreshta Jewellers" style="max-height:48px;max-width:220px;" />
               </td>
             </tr>
             ${opts.body}
@@ -337,7 +337,7 @@ export function confirmationHtml(session: Record<string, unknown>, items: LineIt
     accentBar: '#f1592a',
     logoUrl: view.logoUrl,
     body,
-    footer: `Anagha Jewellers · Vijayawada<br/>Order confirmation for ${escapeHtml(view.billNo)}.`,
+    footer: `Sreshta Jewellers · Vijayawada<br/>Order confirmation for ${escapeHtml(view.billNo)}.`,
   });
 }
 
@@ -373,7 +373,7 @@ export function packedHtml(session: Record<string, unknown>, items: LineItem[] =
     accentBar: '#3b82f6',
     logoUrl: view.logoUrl,
     body,
-    footer: `Anagha Jewellers · Vijayawada<br/>Packed update for ${escapeHtml(view.billNo)}.`,
+    footer: `Sreshta Jewellers · Vijayawada<br/>Packed update for ${escapeHtml(view.billNo)}.`,
   });
 }
 
@@ -431,7 +431,7 @@ export function shippedHtml(session: Record<string, unknown>, items: LineItem[] 
     accentBar: '#f1592a',
     logoUrl: view.logoUrl,
     body,
-    footer: `Anagha Jewellers · Vijayawada<br/>Shipping update for ${escapeHtml(view.billNo)}.`,
+    footer: `Sreshta Jewellers · Vijayawada<br/>Shipping update for ${escapeHtml(view.billNo)}.`,
   });
 }
 
@@ -444,7 +444,7 @@ export function deliveredHtml(session: Record<string, unknown>, items: LineItem[
         <div style="display:inline-block;background:#047857;color:#fff;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:bold;padding:6px 12px;border-radius:999px;">Delivered</div>
         <h1 style="margin:16px 0 8px;font-size:24px;line-height:1.3;color:#047857;">Your order has been delivered.</h1>
         <p style="margin:0;color:#666;font-size:14px;line-height:1.6;">
-          Hello ${escapeHtml(view.name)}, we hope you love your Anagha jewellery.
+          Hello ${escapeHtml(view.name)}, we hope you love your Sreshta jewellery.
           Thank you for shopping with us.
         </p>
       </td>
@@ -468,7 +468,7 @@ export function deliveredHtml(session: Record<string, unknown>, items: LineItem[
     accentBar: '#10b981',
     logoUrl: view.logoUrl,
     body,
-    footer: `Anagha Jewellers · Vijayawada<br/>Delivery confirmation for ${escapeHtml(view.billNo)}.`,
+    footer: `Sreshta Jewellers · Vijayawada<br/>Delivery confirmation for ${escapeHtml(view.billNo)}.`,
   });
 }
 

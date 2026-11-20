@@ -2,13 +2,13 @@
 # Dashboard: https://dashboard.render.com
 services:
   - type: web
-    name: anagha-backend
+    name: sreshta-backend
     runtime: node
     rootDir: backend
     plan: free
     region: singapore
     buildCommand: npm install && npm run build
-    startCommand: npm start
+    startCommand: npm run db:migrate:prod && npm start
     healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
@@ -19,19 +19,16 @@ services:
         value: 10000
       - key: DATABASE_URL
         sync: false
+      - key: SESSION_SECRET
+        sync: false
       - key: CORS_ORIGIN
         sync: false
-      # Octis ERP public catalog + webstore checkout (BFF) — set in Render dashboard
-      - key: ERP_API_URL
+      - key: SUPABASE_URL
         sync: false
-      - key: ERP_STORE_SLUG
+      - key: SUPABASE_SERVICE_ROLE_KEY
         sync: false
-      - key: ERP_BRANCH_ID
-        sync: false
-      - key: WEBSTORE_SECRET
-        sync: false
-      - key: ERP_PUBLIC_SITE_URL
-        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: sreshta-assets
       - key: PUBLIC_BASE_URL
         sync: false
       - key: PUBLIC_API_BASE_URL

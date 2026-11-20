@@ -79,7 +79,7 @@ export function isOwnedImageUrl(url: string) {
   if (value.startsWith('/uploads/') || value.startsWith('/images/')) return true;
   if (value.startsWith('data:') || value.startsWith('blob:')) return true;
   try {
-    const parsed = new URL(value, 'https://anaghajewellers.com');
+    const parsed = new URL(value, 'https://sreshtajewellers.com');
     if (parsed.pathname.startsWith('/uploads/') || parsed.pathname.startsWith('/images/')) return true;
     if (parsed.hostname === 'storage.googleapis.com') return true;
   } catch {
@@ -331,8 +331,8 @@ export async function downloadCatalogTemplate(category?: string) {
   const a = document.createElement('a');
   a.href = url;
   a.download = category
-    ? `anagha-catalog-template-${category.replace(/[^a-zA-Z0-9]+/g, '-').slice(0, 40)}.xlsx`
-    : 'anagha-catalog-template.xlsx';
+    ? `sreshta-catalog-template-${category.replace(/[^a-zA-Z0-9]+/g, '-').slice(0, 40)}.xlsx`
+    : 'sreshta-catalog-template.xlsx';
   a.click();
   URL.revokeObjectURL(url);
 }

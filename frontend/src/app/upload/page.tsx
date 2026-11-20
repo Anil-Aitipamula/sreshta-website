@@ -15,7 +15,7 @@ export default function AdminHome() {
     },
     {
       title: 'Jewellery Page',
-      desc: 'Website jewellery catalog. Re-import from ERP when you need a fresh copy.',
+      desc: 'Website jewellery catalog. Manage products, categories, pricing, and images.',
       img: '/images/admin/jewellery_thumb.png',
       link: '/upload/jewellery',
       color: 'from-blue-500 to-indigo-600',
@@ -165,7 +165,7 @@ export default function AdminHome() {
       </main>
       
       <footer className="py-8 text-center text-gray-400 text-xs tracking-widest uppercase border-t border-gray-100">
-        © 2026 Anagha Administrative Portal
+        © 2026 Sreshta Administrative Portal
       </footer>
     </div>
   );

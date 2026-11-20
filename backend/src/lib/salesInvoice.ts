@@ -75,7 +75,7 @@ export function publicApiBase() {
   return String(
     process.env.PUBLIC_API_BASE_URL ||
       process.env.NEXT_PUBLIC_API_URL ||
-      'https://anaghajewellers.com',
+      'https://sreshtajewellers.com',
   ).replace(/\/+$/, '');
 }
 
@@ -176,7 +176,7 @@ export function buildInvoiceHtml(
     <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
       <div style="max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 20px; border: 1px solid #ddd;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <img src="${logoUrl}" alt="Anagha Jewellers Logo" style="max-height: 60px;" />
+          <img src="${logoUrl}" alt="Sreshta Jewellers Logo" style="max-height: 60px;" />
         </div>
         <div style="border: 1px solid #000;">
           <table width="100%" cellspacing="0" cellpadding="0" style="border-bottom: 1px solid #000;">
@@ -191,7 +191,7 @@ export function buildInvoiceHtml(
           <table width="100%" cellspacing="0" cellpadding="0" style="border-bottom: 1px solid #000;">
             <tr>
               <td width="50%" style="padding: 10px; border-right: 1px solid #000; font-size: 10px; line-height: 1.4; vertical-align: top;">
-                <strong>ANAGHA JEWELLERS</strong><br/>
+                <strong>SRESHTA JEWELLERS</strong><br/>
                 Resala LIC Building,<br/>
                 Apsara Road, Rajagopalachari St,<br/>
                 Governor Peta, VIJAYAWADA - 520002<br/>
@@ -333,7 +333,7 @@ export function renderInvoicePdf(
     const pageWidth = doc.page.width - 80;
     let y = 40;
 
-    doc.fontSize(11).fillColor(navy).font('Helvetica-Bold').text('ANAGHA JEWELLERS', 40, y, {
+    doc.fontSize(11).fillColor(navy).font('Helvetica-Bold').text('SRESHTA JEWELLERS', 40, y, {
       width: pageWidth,
       align: 'center',
     });
@@ -348,7 +348,7 @@ export function renderInvoicePdf(
     doc.moveTo(40, y).lineTo(40 + pageWidth, y).strokeColor('#000').stroke();
     y += 10;
 
-    doc.font('Helvetica-Bold').fontSize(9).text('ANAGHA JEWELLERS', 40, y);
+    doc.font('Helvetica-Bold').fontSize(9).text('SRESHTA JEWELLERS', 40, y);
     doc
       .font('Helvetica')
       .fontSize(8)

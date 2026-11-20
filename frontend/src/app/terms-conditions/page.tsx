@@ -24,7 +24,7 @@ export default function TermsConditionsPage() {
           // Fallback static if empty
           setSections([{
             title: "Offer Details",
-            body: "- Current promotional offers are valid only on selected designs.\n- Discount values and the eligible designs are subject to change without prior notice.\n- Applicability of existing offers in conjunction with other vouchers is at the sole discretion of Anagha."
+            body: "- Current promotional offers are valid only on selected designs.\n- Discount values and the eligible designs are subject to change without prior notice.\n- Applicability of existing offers in conjunction with other vouchers is at the sole discretion of Sreshta."
           }]);
         }
       })

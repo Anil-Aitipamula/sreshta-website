@@ -55,7 +55,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(UPLOADS_DIR));
 
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, service: 'anagha-backend' });
+  res.json({ ok: true, service: 'sreshta-backend' });
 });
 
 /** Public storefront header tabs (admin-picked ERP groups). */
@@ -134,6 +134,6 @@ app.use(
 );
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Anagha API listening on 0.0.0.0:${PORT}`);
+  console.log(`Sreshta API listening on 0.0.0.0:${PORT}`);
   console.log(`Uploads directory: ${path.resolve(__dirname, '..', 'uploads')}`);
 });

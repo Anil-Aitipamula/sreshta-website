@@ -436,7 +436,7 @@ export default function JewelleryListing({ category, audience, article, search, 
   const [active, setActive] = useState<ActiveFilters>(() => {
     let initialSort = '';
     if (typeof window !== 'undefined') {
-      initialSort = sessionStorage.getItem('anagha_sort') || '';
+      initialSort = sessionStorage.getItem('sreshta_sort') || '';
     }
     return {
       articles: articleName ? [{ name: articleName }] : [],
@@ -691,7 +691,7 @@ export default function JewelleryListing({ category, audience, article, search, 
                   onChange={(e) => {
                     const nextSort = e.target.value;
                     if (typeof window !== 'undefined') {
-                      sessionStorage.setItem('anagha_sort', nextSort);
+                      sessionStorage.setItem('sreshta_sort', nextSort);
                     }
                     startTransition(() => {
                       setActive((prev) => ({ ...prev, sort: nextSort }));

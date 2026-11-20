@@ -82,14 +82,14 @@ router.get('/template.xlsx', (req, res) => {
   const file = spreadsheetTemplateXlsx(category || undefined);
   const suffix = category ? `-${category.replace(/[^a-zA-Z0-9]+/g, '-').slice(0, 40)}` : '';
   res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  res.setHeader('Content-Disposition', `attachment; filename="anagha-catalog-template${suffix}.xlsx"`);
+  res.setHeader('Content-Disposition', `attachment; filename="sreshta-catalog-template${suffix}.xlsx"`);
   res.send(file);
 });
 
 router.get('/template.csv', (_req, res) => {
   const file = spreadsheetTemplateXlsx();
   res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  res.setHeader('Content-Disposition', 'attachment; filename="anagha-catalog-template.xlsx"');
+  res.setHeader('Content-Disposition', 'attachment; filename="sreshta-catalog-template.xlsx"');
   res.send(file);
 });
 

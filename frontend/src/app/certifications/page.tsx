@@ -3,8 +3,8 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Our Certifications | Anagha',
-  description: 'Learn about our jewellery certification partners and how we ensure authenticity and quality at Anagha.',
+  title: 'Our Certifications | Sreshta',
+  description: 'Learn about our jewellery certification partners and how we ensure authenticity and quality at Sreshta.',
 };
 
 export default function CertificationsPage() {

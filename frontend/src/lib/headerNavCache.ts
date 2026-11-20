@@ -1,8 +1,8 @@
 /** Shared header nav cache keys/events (storefront Header + admin picker). */
 
-export const NAV_STORAGE_KEY = 'anagha_header_nav_v1';
+export const NAV_STORAGE_KEY = 'sreshta_header_nav_v1';
 /** Fired after admin save/reset so the storefront reloads tabs. */
-export const HEADER_NAV_INVALIDATE_EVENT = 'anagha-header-nav-invalidate';
+export const HEADER_NAV_INVALIDATE_EVENT = 'sreshta-header-nav-invalidate';
 
 type NavCacheHolder = { current: unknown };
 

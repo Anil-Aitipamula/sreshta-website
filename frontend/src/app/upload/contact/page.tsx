@@ -92,7 +92,7 @@ export default function AdminContactInfo() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500"
-                  placeholder="e.g. an@anagha.com"
+                  placeholder="e.g. an@sreshta.com"
                 />
               </div>
 
@@ -105,7 +105,7 @@ export default function AdminContactInfo() {
                   value={supportEmail}
                   onChange={(e) => setSupportEmail(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500"
-                  placeholder="e.g. support@anagha.com"
+                  placeholder="e.g. support@sreshta.com"
                 />
               </div>
 
@@ -141,7 +141,7 @@ export default function AdminContactInfo() {
                   value={corporateEmail}
                   onChange={(e) => setCorporateEmail(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500"
-                  placeholder="e.g. corporate.sales@anagha.com"
+                  placeholder="e.g. corporate.sales@sreshta.com"
                 />
               </div>
 
@@ -153,7 +153,7 @@ export default function AdminContactInfo() {
                   value={salesEmail}
                   onChange={(e) => setSalesEmail(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500"
-                  placeholder="e.g. sales@anagha.com"
+                  placeholder="e.g. sales@sreshta.com"
                 />
               </div>
 

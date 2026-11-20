@@ -3,9 +3,9 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Anagha | Exquisite Jewelry for Every Occasion',
+  title: 'Sreshta | Exquisite Jewelry for Every Occasion',
   description:
-    'Experience the elegance of Anagha. Handcrafted jewelry, solitaires, and luxury collections inspired by timeless beauty.',
+    'Experience the elegance of Sreshta. Handcrafted jewelry, solitaires, and luxury collections inspired by timeless beauty.',
 };
 
 export const viewport: Viewport = {

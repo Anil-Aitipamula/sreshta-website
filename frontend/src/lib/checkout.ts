@@ -63,9 +63,9 @@ export type CheckoutPayment = {
   };
 };
 
-const CART_KEY = 'anagha_cart_v2';
-const LEGACY_CART_KEY = 'anagha_checkout_cart_v1';
-export const CART_CHANGED_EVENT = 'anagha-cart-changed';
+const CART_KEY = 'sreshta_cart_v2';
+const LEGACY_CART_KEY = 'sreshta_checkout_cart_v1';
+export const CART_CHANGED_EVENT = 'sreshta-cart-changed';
 
 function emitCartChanged() {
   if (typeof window === 'undefined') return;
@@ -311,7 +311,7 @@ export function publicOrderId(session: CheckoutSession) {
   return (
     session.order_id ||
     session.erp_bill_number ||
-    `AJ-${String(session.id || '').slice(0, 8).toUpperCase()}`
+    `SJ-${String(session.id || '').slice(0, 8).toUpperCase()}`
   );
 }
 

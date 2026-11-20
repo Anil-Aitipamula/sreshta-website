@@ -23,7 +23,7 @@ type PlanData = {
 };
 
 const SILVER_PLAN_DEFAULT: PlanData = {
-  badge: 'Anagha Silver Advantage Plan:',
+  badge: 'Sreshta Silver Advantage Plan:',
   installment: '0% Interest',
   suffix: 'Easy EMIs',
   desc: 'Flexible monthly plans on selected silver jewellery',

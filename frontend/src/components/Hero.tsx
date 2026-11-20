@@ -33,7 +33,7 @@ export default async function Hero({ meta = { filename: null, url: null, type: n
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
           src={src}
-          alt="Anagha Hero Banner"
+          alt="Sreshta Hero Banner"
           className="block w-full h-auto"
         />
       )}

@@ -6,7 +6,7 @@ import CheckoutForm from '@/components/CheckoutForm';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Checkout | Anagha',
+  title: 'Checkout | Sreshta',
   description: 'Secure checkout for live store inventory.',
 };
 

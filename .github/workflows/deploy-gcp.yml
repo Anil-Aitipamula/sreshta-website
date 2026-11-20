@@ -23,7 +23,7 @@ permissions:
 
 env:
   REGION: asia-south1
-  AR_REPO: cloud-run-source-deploy/anagha-website
+  AR_REPO: cloud-run-source-deploy/sreshta-website
 
 jobs:
   deploy-backend:
@@ -45,7 +45,7 @@ jobs:
 
       - name: Build & push backend
         env:
-          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/anagha-backend
+          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/sreshta-backend
         run: |
           docker build -t "$IMAGE:${{ github.sha }}" -t "$IMAGE:latest" ./backend
           docker push "$IMAGE:${{ github.sha }}"
@@ -53,15 +53,15 @@ jobs:
 
       - name: Deploy backend
         env:
-          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/anagha-backend
+          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/sreshta-backend
         run: |
-          gcloud run deploy anagha-backend \
+          gcloud run deploy sreshta-backend \
             --project="${{ vars.GCP_PROJECT_ID }}" \
             --region="${{ env.REGION }}" \
             --image="${IMAGE}:${{ github.sha }}" \
             --port=8080 \
             --allow-unauthenticated \
-            --add-cloudsql-instances="${{ vars.GCP_PROJECT_ID }}:asia-south1:anagha-pg"
+            --add-cloudsql-instances="${{ vars.GCP_PROJECT_ID }}:asia-south1:sreshta-pg"
 
   deploy-frontend:
     name: Frontend → Cloud Run
@@ -83,13 +83,13 @@ jobs:
 
       - name: Build & push frontend (bake BACKEND_URL into Next rewrites)
         env:
-          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/anagha-frontend
+          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/sreshta-frontend
           BACKEND_URL: ${{ vars.BACKEND_URL }}
           NEXT_PUBLIC_BASE_URL: ${{ vars.NEXT_PUBLIC_BASE_URL }}
           NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
         run: |
           if [ -z "$BACKEND_URL" ]; then
-            echo "Missing repository variable BACKEND_URL (e.g. https://api.anaghajewellers.com)"
+            echo "Missing repository variable BACKEND_URL (e.g. https://api.sreshtajewellers.com)"
             exit 1
           fi
           docker build \
@@ -104,9 +104,9 @@ jobs:
 
       - name: Deploy frontend
         env:
-          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/anagha-frontend
+          IMAGE: ${{ env.REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.AR_REPO }}/sreshta-frontend
         run: |
-          gcloud run deploy anagha-frontend \
+          gcloud run deploy sreshta-frontend \
             --project="${{ vars.GCP_PROJECT_ID }}" \
             --region="${{ env.REGION }}" \
             --image="${IMAGE}:${{ github.sha }}" \

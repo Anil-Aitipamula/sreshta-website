@@ -1,8 +1,8 @@
 {
-  "name": "anagha-website",
+  "name": "sreshta-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Anagha jewellery website — frontend (Next.js) + backend (Express/Neon)",
+  "description": "Sreshta jewellery website — frontend (Next.js) + backend (Express/Neon)",
   "scripts": {
     "dev": "npm run dev --prefix frontend",
     "dev:frontend": "npm run dev --prefix frontend",

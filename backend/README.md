@@ -1,4 +1,4 @@
-# Anagha Express Backend
+# Sreshta Express Backend
 
 Express API backed by [Neon](https://console.neon.tech) Postgres.
 

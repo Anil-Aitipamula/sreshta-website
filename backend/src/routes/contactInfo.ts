@@ -23,7 +23,7 @@ router.post('/submit', async (req: Request, res: Response) => {
     }
 
     const config = await getContactInfo();
-    const targetEmail = config.supportEmail || 'support@anagha.com';
+    const targetEmail = config.supportEmail || 'support@sreshta.com';
 
     await sendSupportQueryEmail({
       name: String(name).trim(),

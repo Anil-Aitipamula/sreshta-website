@@ -47,7 +47,7 @@ export async function generateMetadata({
   const { productId } = await params;
   const item = await loadItem(productId);
   return {
-    title: item ? `${item.name} | Anagha` : 'Product | Anagha',
+    title: item ? `${item.name} | Sreshta` : 'Product | Sreshta',
     description: item?.description || 'View details of our exquisite jewellery collection.',
   };
 }

@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Invoice | Anagha',
+  title: 'Invoice | Sreshta',
   robots: { index: false, follow: false },
 };
 

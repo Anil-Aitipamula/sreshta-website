@@ -8,8 +8,8 @@ export type WishlistItem = {
   purity?: string | null;
 };
 
-const WISHLIST_KEY = 'anagha_wishlist';
-export const WISHLIST_CHANGED_EVENT = 'anagha-wishlist-changed';
+const WISHLIST_KEY = 'sreshta_wishlist';
+export const WISHLIST_CHANGED_EVENT = 'sreshta-wishlist-changed';
 
 export function emitWishlistChanged() {
   if (typeof window === 'undefined') return;

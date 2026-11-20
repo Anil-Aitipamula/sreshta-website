@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
           // Fallback static if empty
           setSections([{
             title: "1. Introduction",
-            body: "We, Anagha Jewellery and Lifestyle Limited (\"Anagha\", \"we\", \"us\" or \"our\"), carry out our business from our retail stores and our website (www.anagha.com) and our mobile app (collectively \"Platform\"). At Anagha, we respect your privacy and are committed to take reasonable precautions to protect your information and comply with our obligations related to privacy.\n\nThis policy (\"Privacy Policy\") outlines the manner in which your information is collected by us through various interactions with you on the Platform, and the manner in which the information so collected is used by us."
+            body: "We, Sreshta Jewellery and Lifestyle Limited (\"Sreshta\", \"we\", \"us\" or \"our\"), carry out our business from our retail stores and our website (www.sreshta.com) and our mobile app (collectively \"Platform\"). At Sreshta, we respect your privacy and are committed to take reasonable precautions to protect your information and comply with our obligations related to privacy.\n\nThis policy (\"Privacy Policy\") outlines the manner in which your information is collected by us through various interactions with you on the Platform, and the manner in which the information so collected is used by us."
           }]);
         }
       })

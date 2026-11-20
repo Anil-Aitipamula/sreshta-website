@@ -224,48 +224,6 @@ export default function JewelleryEditor() {
           <Link href="/upload/jewellery/sold" className={addProductsBtn}>
             Sold
           </Link>
-          <button
-            type="button"
-            disabled={importing}
-            onClick={async () => {
-              setImporting(true);
-              setImportMessage('Starting import…');
-              try {
-                const res = await fetch('/api/upload/catalog/reimport', {
-                  method: 'POST',
-                  credentials: 'include',
-                });
-                const body = await res.json().catch(() => ({}));
-                if (!res.ok && res.status !== 202) {
-                  throw new Error(body.data?.message || body.error || 'Import failed');
-                }
-                setImportMessage(body.data?.message || 'Importing…');
-                const started = Date.now();
-                while (Date.now() - started < 15 * 60 * 1000) {
-                  await new Promise((r) => setTimeout(r, 1500));
-                  const statusRes = await fetch('/api/upload/catalog/status', { credentials: 'include' });
-                  const statusBody = await statusRes.json().catch(() => ({}));
-                  const data = statusBody.data || {};
-                  if (data.message) setImportMessage(data.message);
-                  if (data.running) continue;
-                  if (data.ok === false) throw new Error(data.message || 'Import failed');
-                  if (data.ok === true) {
-                    window.location.reload();
-                    return;
-                  }
-                  break;
-                }
-                throw new Error('Import is taking too long — refresh the page and check the catalog');
-              } catch (err) {
-                setImportMessage(err instanceof Error ? err.message : 'Import failed');
-              } finally {
-                setImporting(false);
-              }
-            }}
-            className="text-[11px] font-bold uppercase tracking-widest text-gray-400 hover:text-navy disabled:opacity-50"
-          >
-            {importing ? 'Importing…' : 'Re-import ERP'}
-          </button>
         </div>
 
         <input
@@ -438,7 +396,7 @@ export default function JewelleryEditor() {
       </main>
 
       <footer className="py-8 text-center text-gray-400 text-[10px] tracking-widest uppercase border-t border-gray-50/50">
-        © 2026 Anagha Administrative Portal
+        © 2026 Sreshta Administrative Portal
       </footer>
     </div>
   );

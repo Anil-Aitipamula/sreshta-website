@@ -101,7 +101,7 @@ function billUrlFor(billId: string | null | undefined) {
 }
 
 function orderIdFor(row: typeof checkoutSessions.$inferSelect) {
-  return String(row.erpBillNumber || `AJ-${String(row.id).slice(0, 8).toUpperCase()}`);
+  return String(row.erpBillNumber || `SJ-${String(row.id).slice(0, 8).toUpperCase()}`);
 }
 
 function publicLineItems(row: typeof checkoutSessions.$inferSelect) {
@@ -225,7 +225,7 @@ async function finalizePaidSession(sessionId: string, paymentRef: string) {
   const complete = {
     bill: {
       id: session.id,
-      bill_number: session.erpBillNumber || `AJ-${String(session.id).slice(0, 8).toUpperCase()}`,
+      bill_number: session.erpBillNumber || `SJ-${String(session.id).slice(0, 8).toUpperCase()}`,
       items: [] as unknown[],
     },
   };
@@ -288,7 +288,7 @@ router.post('/session', requireCustomer, async (req: Request, res: Response) => 
     }
 
     const sessionId = uuidv4();
-    const receipt = `ANAGHA-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const receipt = `SRESHTA-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
     const reserved = await reserveWebsiteTags(uniqueTags);
 
@@ -346,7 +346,7 @@ router.post('/session', requireCustomer, async (req: Request, res: Response) => 
           items_subtotal: reserved.items_subtotal,
         },
         erpBillId: sessionId,
-        erpBillNumber: `AJ-${sessionId.slice(0, 8).toUpperCase()}`,
+        erpBillNumber: `SJ-${sessionId.slice(0, 8).toUpperCase()}`,
         expiresAt,
       });
 

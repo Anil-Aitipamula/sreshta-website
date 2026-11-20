@@ -107,7 +107,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <div className="text-center md:text-right">
-            <p className="text-[12px] text-gray-400">© 2026 Anagha. All Rights Reserved.</p>
+            <p className="text-[12px] text-gray-400">© 2026 Sreshta. All Rights Reserved.</p>
           </div>
 
         </div>

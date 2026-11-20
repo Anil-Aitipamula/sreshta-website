@@ -1,7 +1,7 @@
 import JewelleryListing from '@/components/JewelleryListing';
 
 export const metadata = {
-  title: 'All Jewellery | Anagha',
+  title: 'All Jewellery | Sreshta',
   description: 'Explore our complete collection of exquisite jewellery.',
 };
 
