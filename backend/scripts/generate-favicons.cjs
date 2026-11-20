@@ -29,9 +29,10 @@ async function run() {
     
   const frontendDir = path.resolve(__dirname, '..', '..', 'frontend');
   
-  // Write to frontend/src/app/icon.png (Next.js App router icon convention)
+  // Write to frontend/src/app/icon.png and frontend/src/app/favicon.ico (Next.js App router file conventions)
   fs.writeFileSync(path.join(frontendDir, 'src', 'app', 'icon.png'), circularIcon);
   fs.writeFileSync(path.join(frontendDir, 'src', 'app', 'apple-icon.png'), await sharp(circularIcon).resize(180, 180).png().toBuffer());
+  fs.writeFileSync(path.join(frontendDir, 'src', 'app', 'favicon.ico'), await sharp(circularIcon).resize(48, 48).png().toBuffer());
   fs.writeFileSync(path.join(frontendDir, 'public', 'icon.png'), circularIcon);
   fs.writeFileSync(path.join(frontendDir, 'public', 'favicon.ico'), await sharp(circularIcon).resize(48, 48).png().toBuffer());
   
@@ -39,3 +40,4 @@ async function run() {
 }
 
 run().catch(console.error);
+
