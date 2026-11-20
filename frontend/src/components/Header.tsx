@@ -412,11 +412,11 @@ export default function Header() {
             >
               <WhatsAppIcon />
             </a>
-            <div className="hidden sm:flex w-9 h-9 rounded-full overflow-hidden items-center justify-center shrink-0">
+            <div className="hidden sm:flex w-8 h-8 rounded-full overflow-hidden border border-gray-200 items-center justify-center bg-white shrink-0">
               <img
                 src={logoIconUrl}
                 alt="Logo"
-                className="w-full h-full object-cover scale-[1.04]"
+                className="w-full h-full object-contain p-1"
               />
             </div>
           </div>
@@ -424,9 +424,9 @@ export default function Header() {
             <Image
               src={logoUrl}
               alt="Sreshta"
-              width={180}
-              height={60}
-              className="h-11 sm:h-14 w-auto max-w-[190px] sm:max-w-[240px] object-contain"
+              width={140}
+              height={45}
+              className="h-9 sm:h-11 w-auto max-w-[150px] sm:max-w-[190px] object-contain"
               style={{ width: 'auto' }}
               unoptimized
               priority
@@ -597,14 +597,14 @@ export default function Header() {
 
       {/* Desktop white top */}
       <div className="bg-white hidden lg:block overflow-x-clip w-full max-w-[100vw]">
-        <div className="flex items-end h-[94px] pl-[112px] xl:pl-[120px] pr-4 xl:pr-10 pb-[8px]">
-          <Link href="/" className="flex items-center shrink-0 translate-y-1">
+        <div className="flex items-end h-[76px] pl-[120px] xl:pl-[128px] pr-4 xl:pr-10 pb-[10px]">
+          <Link href="/" className="flex items-center shrink-0 translate-y-2.5">
             <Image
               src={logoUrl}
               alt="Sreshta"
-              width={360}
-              height={100}
-              className="h-[74px] xl:h-[82px] w-auto object-contain"
+              width={260}
+              height={70}
+              className="h-[48px] xl:h-[54px] w-auto object-contain"
               style={{ width: 'auto' }}
               unoptimized
               priority
@@ -742,16 +742,16 @@ export default function Header() {
         <Link
           href="/"
           aria-label="Home"
-          className={`absolute left-5 lg:left-6 z-50 transition-all duration-300 ease-in-out origin-top-left rounded-full overflow-hidden shadow-lg flex items-center justify-center ${
-            scrolled ? 'w-[40px] h-[40px] top-[3px]' : 'w-[96px] h-[96px] -top-[74px]'
+          className={`absolute left-10 z-50 transition-all duration-300 ease-in-out origin-top-left bg-white rounded-full overflow-hidden shadow-sm flex items-center justify-center ${
+            scrolled ? 'w-[32px] h-[32px] top-[7px]' : 'w-[75px] h-[75px] -top-[64px]'
           }`}
         >
           <Image
             src={logoIconUrl}
             alt="Sreshta"
-            width={96}
-            height={96}
-            className="w-full h-full object-cover scale-[1.04]"
+            width={75}
+            height={75}
+            className="w-full h-full object-contain p-2"
             unoptimized
             priority
           />
