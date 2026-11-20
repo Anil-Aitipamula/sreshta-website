@@ -13,6 +13,7 @@
     "start": "npm run start --prefix frontend",
     "start:backend": "npm run start --prefix backend",
     "lint": "npm run lint --prefix frontend",
+    "typecheck:frontend": "npm run typecheck --prefix frontend",
     "backend:migrate": "npm run db:migrate --prefix backend",
     "backend:seed": "npm run db:seed --prefix backend",
     "install:all": "npm install --prefix frontend && npm install --prefix backend"
