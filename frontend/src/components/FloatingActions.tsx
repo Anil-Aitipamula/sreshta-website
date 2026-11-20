@@ -29,7 +29,7 @@ export default function FloatingActions() {
     });
   };
 
-  const cleanWhatsApp = (whatsapp || '+918074811800').replace(/[^0-9]/g, '');
+  const cleanWhatsApp = (whatsapp || '+919989608595').replace(/[^0-9]/g, '');
   const waUrl = `https://wa.me/${cleanWhatsApp}?text=${encodeURIComponent('Hi, I am interested in Sreshta Jewellery.')}`;
 
   return (

@@ -117,7 +117,7 @@ export default function AdminContactInfo() {
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500"
-                  placeholder="e.g. +918074811800"
+                  placeholder="e.g. +919989608595"
                 />
               </div>
 
@@ -129,7 +129,7 @@ export default function AdminContactInfo() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-rose-500"
-                  placeholder="e.g. 18004190066"
+                  placeholder="e.g. +919989608595"
                 />
               </div>
 

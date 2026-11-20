@@ -77,7 +77,7 @@ export default function ContactUs() {
               <div>
                 <h3 className="text-[#bb984d] font-semibold text-[15px] mb-4 font-domine">Customer Delight</h3>
                 <div className="space-y-2 text-[14px] text-[#4a4a4a] leading-relaxed">
-                  <p>Call us at <strong>{phone}</strong> (9 am–10 pm, 7 days a week)</p>
+                  <p>Call us at <a href={`tel:${phone.replace(/[^0-9]/g, '')}`} className="font-bold text-navy hover:text-[#bb984d] underline">{phone}</a> (9 am–10 pm, 7 days a week)</p>
                   <p className="text-gray-400">or</p>
                   <p className="text-[13px] text-gray-500 font-sans mt-2">
                     Write to us at{' '}

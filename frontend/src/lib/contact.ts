@@ -14,9 +14,9 @@ export interface ContactInfo {
 }
 
 const DEFAULT_CONTACT: ContactInfo = {
-  whatsapp: '+918074811800',
+  whatsapp: '+919989608595',
   email: 'an@sreshta.com',
-  phone: '18004190066',
+  phone: '+919989608595',
   corporateEmail: 'corporate.sales@sreshta.com',
   salesEmail: 'sales@sreshta.com',
   instagram: 'https://www.instagram.com/sreshtasilver_92.5?igsh=dnRiOTY4YWlzb2oy',

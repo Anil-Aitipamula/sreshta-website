@@ -18,9 +18,9 @@ export interface ContactInfoConfig {
 
 const CONTACT_INFO_KEY = 'contact_info';
 const DEFAULT_CONFIG: ContactInfoConfig = {
-  whatsapp: '+918074811800',
+  whatsapp: '+919989608595',
   email: 'an@sreshta.com',
-  phone: '18004190066',
+  phone: '+919989608595',
   corporateEmail: 'corporate.sales@sreshta.com',
   salesEmail: 'sales@sreshta.com',
   supportEmail: 'support@sreshta.com',
