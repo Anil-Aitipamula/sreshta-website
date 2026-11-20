@@ -74,7 +74,7 @@ export default function AdminShippingPage() {
         </div>
 
         <p className="text-sm text-gray-500 mb-6">
-          Customers pick one of these at checkout. The charge is added to the Razorpay total.
+          Customers pick one of these at checkout. The charge is included in the order total.
           Delivery time is shown on the order confirmation and invoice after payment.
         </p>
 
