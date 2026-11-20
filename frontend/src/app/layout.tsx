@@ -7,6 +7,15 @@ export const metadata: Metadata = {
   title: 'Sreshta | Exquisite Jewelry for Every Occasion',
   description:
     'Experience the elegance of Sreshta. Handcrafted jewelry, solitaires, and luxury collections inspired by timeless beauty.',
+  icons: {
+    icon: [
+      { url: '/icon.png?v=2', sizes: '512x512', type: 'image/png' },
+      { url: '/favicon.ico?v=2', sizes: '48x48' },
+    ],
+    apple: [
+      { url: '/apple-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
