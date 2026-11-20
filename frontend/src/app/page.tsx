@@ -1,21 +1,25 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import TrustStrip from '@/components/TrustStrip';
 import Categories from '@/components/Categories';
-import Offers from '@/components/Offers';
+import BestsellersShowcase from '@/components/BestsellersShowcase';
+import WhatsAppVideoLounge from '@/components/WhatsAppVideoLounge';
 import LatestCollections from '@/components/LatestCollections';
 import CuratedStyles from '@/components/CuratedStyles';
-import DesignLed from '@/components/DesignLed';
 import Testimonials from '@/components/Testimonials';
-import AboutCompany from '@/components/AboutCompany';
 import PromiseSection from '@/components/Promise';
 import Footer from '@/components/Footer';
-import { cmsSrc } from '@/lib/cmsAsset';
 
 const EMPTY_LANDING = {
-  hero: null,
   goldCategories: [],
   silverCategories: [],
-  offers: [],
+  collections: [],
+  curatedSlots: [],
+  curatedTitles: [],
+  testimonialsImages: [],
+  testimonialsNames: [],
+  testimonialsTexts: [],
+  promise: [],
   landing_visibility: {},
 };
 
@@ -36,61 +40,44 @@ import { Suspense } from 'react';
 
 async function LandingContent() {
   const meta = await getMeta();
-  const visibility = meta.landing_visibility || {};
 
   return (
     <>
-      {!visibility.hideHero && <Hero meta={meta.hero} />}
-      
-      {!visibility.hideCategories && (
-        <Categories
-          goldLive={meta.goldCategories || []}
-          silverLive={meta.silverCategories || []}
-          goldPlan={meta.goldPlan}
-          silverPlan={meta.silverPlan}
-          hideGoldPlan={visibility.hideGoldPlan}
-          hideSilverPlan={visibility.hideSilverPlan}
-        />
-      )}
-      
-      {!visibility.hideOffers && <Offers live={meta.offers || []} />}
-      
-      {!visibility.hideCollections && (
-        <LatestCollections live={meta.collections || []} btnLink={meta.collectionsBtnLink} />
-      )}
-      
-      {!visibility.hideCurated && (
-        <CuratedStyles liveSlots={meta.curatedSlots} liveTitles={meta.curatedTitles} />
-      )}
+      {/* 1. Lumière-Style Fine Jewellery Hero (Integrated Trust Pillars) */}
+      <Hero meta={meta?.hero} />
 
-      {!visibility.hideDesignLed && (
-        <DesignLed liveImages={meta.designLedImages} liveLabels={meta.designLedLabels} />
-      )}
+      {/* 2. Categories Showcase with Filter Pills Below */}
+      <Categories goldLive={meta?.goldCategories} silverLive={meta?.silverCategories} />
 
-      {!visibility.hideBanner && (
-        <section className="w-full">
-          <img 
-            src={meta.standaloneBanner ? cmsSrc(meta.standaloneBanner) : "/images/banner_collection.webp"}
-            alt="Latest Collection Banner" 
-            className="w-full h-auto block" 
-            draggable={false}
-          />
-        </section>
-      )}
+      {/* 4. Signature Bestsellers Grid with Direct WhatsApp Order */}
+      <BestsellersShowcase />
 
-      {!visibility.hideTestimonials && (
-        <Testimonials 
-          live={{
-            images: meta.testimonialsImages || [],
-            names:  meta.testimonialsNames || [],
-            texts:  meta.testimonialsTexts || [],
-          }} 
-        />
-      )}
-      
-      {!visibility.hideAbout && <AboutCompany data={meta.about} />}
-      
-      {!visibility.hidePromise && <PromiseSection labels={meta.promise} />}
+      {/* 5. Live WhatsApp Video Call Shopping VIP Lounge */}
+      <WhatsAppVideoLounge
+        liveImage={
+          meta?.standaloneBanner?.banner ||
+          meta?.standaloneBanner?.url ||
+          meta?.standaloneBanner?.filename
+        }
+      />
+
+      {/* 6. Curated Occasion Collections (Bridal, Solitaires, Everyday) */}
+      <LatestCollections live={meta.collections || []} />
+
+      {/* 7. Shop By Budget & Curated Gifting Styles */}
+      <CuratedStyles liveSlots={meta.curatedSlots} liveTitles={meta.curatedTitles} />
+
+      {/* 8. Voices of Royal Trust & Verified Customer Reviews */}
+      <Testimonials
+        live={{
+          images: meta.testimonialsImages || [],
+          names: meta.testimonialsNames || [],
+          texts: meta.testimonialsTexts || [],
+        }}
+      />
+
+      {/* 9. The Sreshta Royal Promise (6 Trust Pillars) */}
+      <PromiseSection labels={meta.promise} />
     </>
   );
 }
@@ -98,7 +85,7 @@ async function LandingContent() {
 function LandingSkeleton() {
   return (
     <div className="w-full h-[60vh] bg-gray-50 flex items-center justify-center animate-pulse">
-      <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-16 h-16 border-4 border-[#102353] border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
 }
@@ -107,7 +94,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-col gap-y-0 md:gap-y-8 pb-8 md:pb-12 overflow-x-clip w-full max-w-[100vw]">
+      <main className="flex flex-col gap-y-0 overflow-x-clip w-full max-w-[100vw]">
         <Suspense fallback={<LandingSkeleton />}>
           <LandingContent />
         </Suspense>

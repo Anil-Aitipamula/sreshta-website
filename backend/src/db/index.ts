@@ -19,8 +19,16 @@ const isSsl =
 export const pool = new Pool({
   connectionString: connectionString || 'postgresql://127.0.0.1:9/unset',
   max: 10,
+  idleTimeoutMillis: 30_000,
   connectionTimeoutMillis: 10_000,
   ssl: isSsl ? { rejectUnauthorized: false } : undefined,
+  keepAlive: true,
+  keepAliveInitialDelayMillis: 10_000,
+});
+
+pool.on('error', (err) => {
+  // Prevent idle client termination (e.g. Neon scale-to-zero) from crashing the process
+  console.warn('[db pool] Idle client disconnected by host (auto-recycling):', err.message);
 });
 
 export const db = drizzle(pool, { schema });

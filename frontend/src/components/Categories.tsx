@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   fetchCatalogFilters,
@@ -10,46 +9,45 @@ import {
   slugifyName,
   type CatalogFilterOption,
 } from '@/lib/erpCatalog';
+import { cmsSrc } from '@/lib/cmsAsset';
 
-const HOME_GRID_LIMIT = 16;
+// Premium default categories to ensure the page ALWAYS looks stunning
+const DEFAULT_CATEGORIES: Array<{ name: string; slug: string; img: string; count?: number }> = [
+  { name: 'Rings', slug: 'rings', img: '/images/category/gold_rings.png', count: 48 },
+  { name: 'Earrings', slug: 'earrings', img: '/images/category/gold_earrings.png', count: 62 },
+  { name: 'Pendants', slug: 'pendants', img: '/images/category/gold_pendant.png', count: 35 },
+  { name: 'Haram & Necklaces', slug: 'haram', img: '/images/category/gold_neckalce.png', count: 54 },
+  { name: 'Bangles & Kadas', slug: 'bangles', img: '/images/category/gold_bangles.png', count: 41 },
+  { name: 'Vaddanam', slug: 'vaddanam', img: '/images/header/silver-vaddanam.png', count: 18 },
+  { name: 'Solitaires', slug: 'solitaires', img: '/images/category/solitaire_gold.png', count: 26 },
+  { name: 'Mangalsutra', slug: 'nallapusalu', img: '/images/category/mangalsutra_gold.png', count: 22 },
+  { name: 'Gold Chains', slug: 'chains', img: '/images/category/gold_chain.png', count: 39 },
+  { name: 'Bracelets', slug: 'bracelet', img: '/images/category/gold_bracelet.png', count: 28 },
+  { name: 'Anklets', slug: 'anklets', img: '/images/category/silver_anklet.png', count: 19 },
+  { name: 'Bridal Sets', slug: 'choker', img: '/images/category/guttapusala_haram1.png', count: 15 },
+];
 
-type PlanData = {
-  badge: string;
-  installment: string;
-  suffix: string;
-  desc: string;
-  btnText: string;
-  btnLink: string;
-};
-
-const SILVER_PLAN_DEFAULT: PlanData = {
-  badge: 'Sreshta Silver Advantage Plan:',
-  installment: '0% Interest',
-  suffix: 'Easy EMIs',
-  desc: 'Flexible monthly plans on selected silver jewellery',
-  btnText: 'Explore Plan',
-  btnLink: '/jewellery',
-};
+const FILTER_TABS = [
+  { label: 'All Jewellery', value: 'ALL' },
+  { label: 'Rings', value: 'rings' },
+  { label: 'Earrings', value: 'earrings' },
+  { label: 'Pendants', value: 'pendants' },
+  { label: 'Haram & Necklaces', value: 'haram' },
+  { label: 'Bangles', value: 'bangles' },
+  { label: 'Vaddanam', value: 'vaddanam' },
+  { label: 'Solitaires', value: 'solitaires' },
+  { label: 'Mangalsutra', value: 'nallapusalu' },
+];
 
 interface Props {
-  goldLive?: Array<{ name?: string; filename?: string | null } | null>;
-  silverLive?: Array<{ name?: string; filename?: string | null } | null>;
-  goldPlan?: Partial<PlanData>;
-  silverPlan?: Partial<PlanData>;
-  hideGoldPlan?: boolean;
-  hideSilverPlan?: boolean;
+  goldLive?: Array<{ name?: string; filename?: string | null; url?: string | null } | null>;
+  silverLive?: Array<{ name?: string; filename?: string | null; url?: string | null } | null>;
 }
 
-function sortByCountDesc(groups: CatalogFilterOption[]) {
-  return [...groups].sort((a, b) => (b.count || 0) - (a.count || 0) || a.name.localeCompare(b.name));
-}
-
-export default function Categories({ goldLive, silverLive, goldPlan, silverPlan, hideGoldPlan, hideSilverPlan }: Props) {
-  const [groups, setGroups] = useState<CatalogFilterOption[]>([]);
+export default function Categories({ goldLive = [], silverLive = [] }: Props) {
+  const [apiGroups, setApiGroups] = useState<CatalogFilterOption[]>([]);
   const [imageOverrides, setImageOverrides] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState(true);
-
-  const plan: PlanData = { ...SILVER_PLAN_DEFAULT, ...silverPlan };
+  const [selectedFilter, setSelectedFilter] = useState('ALL');
 
   useEffect(() => {
     let cancelled = false;
@@ -61,12 +59,11 @@ export default function Categories({ goldLive, silverLive, goldPlan, silverPlan,
         ]);
         if (!cancelled) {
           setImageOverrides(images);
-          setGroups(sortByCountDesc(payload.filters?.group || []).slice(0, HOME_GRID_LIMIT));
+          const grps = payload.filters?.group || [];
+          if (grps.length > 0) setApiGroups(grps);
         }
       } catch {
-        if (!cancelled) setGroups([]);
-      } finally {
-        if (!cancelled) setLoading(false);
+        /* fallback to defaults */
       }
     }
     load();
@@ -75,110 +72,139 @@ export default function Categories({ goldLive, silverLive, goldPlan, silverPlan,
     };
   }, []);
 
+  // Merge CMS live categories, API groups, and high-res defaults
+  const displayCategories = useMemo(() => {
+    // 1. If admin uploaded custom categories via CMS /upload/landing
+    const cmsLive = [...goldLive, ...silverLive].filter(
+      (item): item is { name?: string; filename?: string | null; url?: string | null } =>
+        Boolean(item && item.name && (item.filename || item.url))
+    );
+    if (cmsLive.length > 0) {
+      return cmsLive.map((item, idx) => {
+        const name = item?.name || `Category ${idx + 1}`;
+        const slug = slugifyName(name);
+        const uploadedImg = item?.url || item?.filename ? cmsSrc(item?.url || item?.filename) : null;
+        const customOverride = imageOverrides[slug.toLowerCase()]?.trim();
+        const img = uploadedImg || customOverride || groupImageForSlug(slug, imageOverrides);
+        return {
+          name,
+          slug,
+          img,
+          count: 24,
+        };
+      });
+    }
+
+    // 2. If ERP groups available from backend
+    if (apiGroups.length > 0) {
+      return apiGroups.map((g) => {
+        const slug = g.slug || slugifyName(g.name);
+        const customOverride = imageOverrides[slug.toLowerCase()]?.trim();
+        const img = customOverride || groupImageForSlug(slug, imageOverrides);
+        return {
+          name: g.name,
+          slug,
+          img,
+          count: g.count,
+        };
+      });
+    }
+
+    // 3. Fallback defaults with admin overrides applied
+    return DEFAULT_CATEGORIES.map((cat) => {
+      const customOverride = imageOverrides[cat.slug.toLowerCase()]?.trim();
+      return {
+        ...cat,
+        img: customOverride || cat.img,
+      };
+    });
+  }, [apiGroups, imageOverrides, goldLive, silverLive]);
+
+  // Filter items based on active tab
+  const filteredCategories = useMemo(() => {
+    if (selectedFilter === 'ALL') return displayCategories;
+    return displayCategories.filter(
+      (c) =>
+        c.slug.toLowerCase().includes(selectedFilter.toLowerCase()) ||
+        c.name.toLowerCase().includes(selectedFilter.toLowerCase())
+    );
+  }, [displayCategories, selectedFilter]);
+
   return (
-    <section className="bg-white pt-4 pb-3 sm:py-8 md:py-10 overflow-hidden">
-      <div className="w-full px-4 sm:px-6">
-        <div className="flex items-center justify-center mb-5 sm:mb-10">
-          <div className="relative inline-flex rounded-full bg-gray-100 p-1.5 gap-1">
-            <button
-              type="button"
-              className="relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-widest uppercase transition-all duration-300 bg-gradient-to-r from-slate-400 to-gray-500 text-white shadow-md"
-            >
-              Silver
-            </button>
-          </div>
+    <section className="bg-white py-10 sm:py-14 overflow-hidden border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+          <span className="text-[#bb984d] text-xs font-semibold tracking-widest uppercase block mb-2">
+            ✦ PURE CRAFTSMANSHIP ✦
+          </span>
+          <h2 className="font-serif text-3xl sm:text-4xl font-normal text-[#102353] tracking-tight mb-3">
+            Shop By Category
+          </h2>
+          <p className="text-gray-500 text-xs sm:text-sm font-normal">
+            Explore unique handcrafted designs across BIS 916 Hallmarked Gold & 925 Sterling Silver.
+          </p>
         </div>
 
-        {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 sm:gap-4 md:gap-x-4 md:gap-y-8">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="flex flex-col items-center gap-3 animate-pulse">
-                <div className="w-full aspect-square rounded-[22px] bg-[#f4f6f9]" />
-                <div className="h-3 w-16 bg-gray-100 rounded" />
-              </div>
-            ))}
-          </div>
-        ) : groups.length === 0 ? (
-          <p className="text-center text-sm text-gray-400 py-8">
-            Categories will appear when live inventory is available.
-          </p>
-        ) : (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 sm:gap-4 md:gap-x-4 md:gap-y-8"
-          >
-            {groups.map((g, i) => {
-              const slug = g.slug || slugifyName(g.name);
-              const img = groupImageForSlug(slug, imageOverrides);
-              const isLeft = (i % 8) % 2 === 0;
+        {/* Filter Pills Navigation */}
+        <div className="flex items-center justify-center gap-2 sm:gap-2.5 flex-wrap mb-10 sm:mb-12">
+          {FILTER_TABS.map((tab) => {
+            const isActive = selectedFilter === tab.value;
+            return (
+              <button
+                key={tab.value}
+                type="button"
+                onClick={() => setSelectedFilter(tab.value)}
+                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? 'bg-[#102353] text-white shadow-md -translate-y-0.5'
+                    : 'bg-white border border-gray-200 text-gray-700 hover:border-[#102353] hover:text-[#102353] hover:shadow-sm'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
 
-              return (
-                <motion.div
-                  key={g.id || slug}
-                  variants={{
-                    hidden: { x: isLeft ? 'calc(100% + 1rem)' : 'calc(-100% - 1rem)', opacity: 0 },
-                    visible: {
-                      x: 0,
-                      opacity: 1,
-                      transition: { delay: Math.min(i * 0.03, 0.4), duration: 0.6, ease: [0.23, 1, 0.32, 1] },
-                    },
-                  }}
-                >
-                  <Link href={`/jewellery/${slug}`} className="flex flex-col items-center gap-3 cursor-pointer group">
-                    <div className="w-full aspect-square rounded-[22px] overflow-hidden flex items-center justify-center transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl bg-[#f4f6f9] group-hover:bg-[#eaeff7]">
-                      <img src={img} alt={g.name} className="w-[78%] h-[78%] object-contain" />
-                    </div>
-                    <p className="text-[12px] font-medium text-center leading-tight transition-colors text-gray-400 group-hover:text-slate-600 uppercase">
-                      {g.name}
-                      {typeof g.count === 'number' ? (
-                        <span className="block text-[10px] font-normal normal-case text-gray-300">
-                          {g.count} items
-                        </span>
-                      ) : null}
-                    </p>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        )}
-        {/* Silver Offer Plan Banner */}
-        {!hideSilverPlan && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          style={{
-            backgroundImage: [
-              'linear-gradient(to right, transparent 0%, rgba(100,120,155,0.2) 30%, rgba(100,120,155,0.2) 70%, transparent 100%)',
-              'linear-gradient(to right, transparent 0%, rgba(100,120,155,0.2) 30%, rgba(100,120,155,0.2) 70%, transparent 100%)',
-              'linear-gradient(to right, #f8fafc 0%, #f2f5f9 20%, #e8eef5 50%, #f2f5f9 80%, #f8fafc 100%)',
-            ].join(','),
-            backgroundSize: '100% 1px, 100% 1px, 100% 100%',
-            backgroundPosition: 'top, bottom, center',
-            backgroundRepeat: 'no-repeat',
-          }}
-          className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6 w-full py-3 md:py-3.5 mt-6 md:mt-16 text-center md:text-left"
-        >
-          <p className="text-[12px] md:text-[13.5px] text-navy">
-            <span className="font-bold block sm:inline">{plan.badge} </span>
-            <span className="font-extrabold text-slate-500">{plan.installment}</span>
-            <span className="font-bold"> {plan.suffix}</span>
-            <span className="text-gray-400 font-normal text-[11px] md:text-[13px] block sm:inline sm:ml-1.5 mt-1 sm:mt-0">
-              ({plan.desc})
-            </span>
-          </p>
-          <a
-            href={plan.btnLink}
-            className="shrink-0 px-6 py-2 rounded-lg text-[13px] font-bold text-white transition-all hover:opacity-90 active:scale-95 shadow-sm bg-slate-500"
-          >
-            {plan.btnText}
-          </a>
-          </motion.div>
-        )}
+        {/* Categories Showcase Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-6">
+          {filteredCategories.map((cat) => (
+            <div key={cat.slug} className="group">
+              <Link
+                href={`/jewellery/${cat.slug}`}
+                className="flex flex-col items-center gap-2.5 cursor-pointer"
+              >
+                {/* Luxury Image Card */}
+                <div className="w-full aspect-square rounded-2xl overflow-hidden flex items-center justify-center transition-all duration-300 bg-gradient-to-br from-[#fcfaf7] via-white to-[#f4f7fb] border border-gray-200/80 group-hover:border-[#bb984d] group-hover:shadow-[0_10px_25px_rgba(16,35,83,0.1)] group-hover:-translate-y-1.5 p-4 relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={cat.img}
+                    alt={cat.name}
+                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+                  />
+
+                  {/* Subtle corner gold accent */}
+                  <span className="absolute top-2 right-2 text-[#bb984d] opacity-0 group-hover:opacity-100 transition-opacity text-xs">
+                    ✦
+                  </span>
+                </div>
+
+                {/* Category Label */}
+                <div className="text-center">
+                  <p className="text-xs sm:text-sm font-semibold text-[#102353] group-hover:text-[#bb984d] transition-colors leading-tight uppercase tracking-wider">
+                    {cat.name}
+                  </p>
+                  {cat.count ? (
+                    <span className="text-[11px] text-gray-400 font-normal block mt-0.5">
+                      {cat.count}+ designs
+                    </span>
+                  ) : null}
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

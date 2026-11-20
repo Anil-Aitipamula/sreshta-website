@@ -326,19 +326,56 @@ export default function UploadPage() {
   const [heroSaving, setHeroSaving] = useState(false);
   const [heroMsg, setHeroMsg] = useState('');
   const heroInputRef = useRef<HTMLInputElement>(null);
-  const [heroLoading, setHeroLoading] = useState(true);
+  const [, setHeroLoading] = useState(true);
+
+  // Lumière Hero Text States
+  const [tagline, setTagline] = useState('TIMELESS ELEGANCE. MODERN YOU.');
+  const [titleLine1, setTitleLine1] = useState('Jewellery That');
+  const [titleLine2, setTitleLine2] = useState('Tells Your Story');
+  const [subtitle, setSubtitle] = useState(
+    'Exquisite designs, ethically crafted to celebrate every moment that matters.'
+  );
+  const [primaryBtnText, setPrimaryBtnText] = useState('SHOP THE COLLECTION');
+  const [primaryBtnLink, setPrimaryBtnLink] = useState('/jewellery');
+  const [secondaryBtnText, setSecondaryBtnText] = useState('ORDER ON WHATSAPP');
+  const [secondaryBtnLink, setSecondaryBtnLink] = useState(
+    'https://wa.me/919989608595?text=Hi%20Sreshta%20Jewellers%2C%20I%20would%20like%20to%20enquire%20about%20your%20jewellery%20collections.'
+  );
+  const [trust1Title, setTrust1Title] = useState('Certified Diamonds');
+  const [trust1Desc, setTrust1Desc] = useState('Authentic & ethically sourced');
+  const [trust2Title, setTrust2Title] = useState('Lifetime Warranty');
+  const [trust2Desc, setTrust2Desc] = useState('Quality you can trust, for a lifetime');
+  const [trust3Title, setTrust3Title] = useState('Free Shipping');
+  const [trust3Desc, setTrust3Desc] = useState('Complimentary insured delivery worldwide');
 
   useEffect(() => {
-    fetch('/api/upload/hero').then(r => r.json()).then(d => {
-      if (d.url || d.filename) {
-        setHeroPreview(cmsSrc(d.url || d.filename));
-        setHeroIsVideo(d.type === 'video');
-      } else {
-        setHeroPreview(HERO_DEFAULT);
-        setHeroIsVideo(false);
-      }
-      setHeroLoading(false);
-    }).catch(() => setHeroLoading(false));
+    fetch('/api/upload/hero')
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.url || d.filename) {
+          setHeroPreview(cmsSrc(d.url || d.filename));
+          setHeroIsVideo(d.type === 'video');
+        } else {
+          setHeroPreview(HERO_DEFAULT);
+          setHeroIsVideo(false);
+        }
+        if (d.tagline) setTagline(d.tagline);
+        if (d.titleLine1) setTitleLine1(d.titleLine1);
+        if (d.titleLine2) setTitleLine2(d.titleLine2);
+        if (d.subtitle) setSubtitle(d.subtitle);
+        if (d.primaryBtnText) setPrimaryBtnText(d.primaryBtnText);
+        if (d.primaryBtnLink) setPrimaryBtnLink(d.primaryBtnLink);
+        if (d.secondaryBtnText) setSecondaryBtnText(d.secondaryBtnText);
+        if (d.secondaryBtnLink) setSecondaryBtnLink(d.secondaryBtnLink);
+        if (d.trust1Title) setTrust1Title(d.trust1Title);
+        if (d.trust1Desc) setTrust1Desc(d.trust1Desc);
+        if (d.trust2Title) setTrust2Title(d.trust2Title);
+        if (d.trust2Desc) setTrust2Desc(d.trust2Desc);
+        if (d.trust3Title) setTrust3Title(d.trust3Title);
+        if (d.trust3Desc) setTrust3Desc(d.trust3Desc);
+        setHeroLoading(false);
+      })
+      .catch(() => setHeroLoading(false));
   }, []);
 
   const loadHero = (f: File) => {
@@ -349,23 +386,65 @@ export default function UploadPage() {
   };
 
   const publishHero = async () => {
-    if (!heroFile) return;
     setHeroSaving(true);
-    const fd = new FormData();
-    fd.append('file', heroFile);
-    await fetch('/api/upload/hero', { method: 'POST', body: fd });
-    setHeroFile(null);
-    setHeroSaving(false);
-    setHeroMsg('Hero published!');
+    setHeroMsg('');
+    try {
+      const fd = new FormData();
+      if (heroFile) fd.append('file', heroFile);
+      fd.append('tagline', tagline);
+      fd.append('titleLine1', titleLine1);
+      fd.append('titleLine2', titleLine2);
+      fd.append('subtitle', subtitle);
+      fd.append('primaryBtnText', primaryBtnText);
+      fd.append('primaryBtnLink', primaryBtnLink);
+      fd.append('secondaryBtnText', secondaryBtnText);
+      fd.append('secondaryBtnLink', secondaryBtnLink);
+      fd.append('trust1Title', trust1Title);
+      fd.append('trust1Desc', trust1Desc);
+      fd.append('trust2Title', trust2Title);
+      fd.append('trust2Desc', trust2Desc);
+      fd.append('trust3Title', trust3Title);
+      fd.append('trust3Desc', trust3Desc);
+
+      const res = await fetch('/api/upload/hero', { method: 'POST', body: fd });
+      if (res.ok) {
+        setHeroFile(null);
+        setHeroMsg('Hero settings & media saved!');
+        setTimeout(() => setHeroMsg(''), 4000);
+      } else {
+        setHeroMsg('Save failed.');
+      }
+    } catch {
+      setHeroMsg('Network error.');
+    } finally {
+      setHeroSaving(false);
+    }
   };
 
   const resetHero = async () => {
-    if (!confirm('Reset hero to default?')) return;
+    if (!confirm('Reset hero content and media to default?')) return;
     await fetch('/api/upload/hero', { method: 'DELETE' });
     setHeroPreview(HERO_DEFAULT);
     setHeroFile(null);
     setHeroIsVideo(false);
-    setHeroMsg('Hero reset.');
+    setTagline('TIMELESS ELEGANCE. MODERN YOU.');
+    setTitleLine1('Jewellery That');
+    setTitleLine2('Tells Your Story');
+    setSubtitle('Exquisite designs, ethically crafted to celebrate every moment that matters.');
+    setPrimaryBtnText('SHOP THE COLLECTION');
+    setPrimaryBtnLink('/jewellery');
+    setSecondaryBtnText('ORDER ON WHATSAPP');
+    setSecondaryBtnLink(
+      'https://wa.me/919989608595?text=Hi%20Sreshta%20Jewellers%2C%20I%20would%20like%20to%20enquire%20about%20your%20jewellery%20collections.'
+    );
+    setTrust1Title('Certified Diamonds');
+    setTrust1Desc('Authentic & ethically sourced');
+    setTrust2Title('Lifetime Warranty');
+    setTrust2Desc('Quality you can trust, for a lifetime');
+    setTrust3Title('Free Shipping');
+    setTrust3Desc('Complimentary insured delivery worldwide');
+    setHeroMsg('Hero reset to default.');
+    setTimeout(() => setHeroMsg(''), 4000);
   };
 
   return (
@@ -378,42 +457,246 @@ export default function UploadPage() {
 
         <SectionVisibility />
 
-        {/* ── HERO ── */}
-        <section className="space-y-5">
-          <div className="flex items-end justify-between border-b border-gray-100 pb-4">
-            <h2 className="text-2xl font-display font-bold text-navy uppercase tracking-widest">Hero Section</h2>
+        {/* ── LUMIÈRE FINE JEWELLERY HERO ── */}
+        <section className="space-y-6 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/80 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-gray-100 pb-5 gap-3">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-[10px] font-bold uppercase tracking-widest mb-1.5">
+                <span>✦</span>
+                <span>LUMIÈRE FINE JEWELLERY TEMPLATE</span>
+              </div>
+              <h2 className="text-2xl font-display font-bold text-navy uppercase tracking-widest">
+                Hero Section Editor
+              </h2>
+              <p className="text-xs text-gray-500 mt-1">
+                Customize the hero macro jewellery image, headlines, buttons, and integrated trust pillars.
+              </p>
+            </div>
             <div className="flex items-center gap-3">
-              {heroMsg && <span className="text-xs text-green-500 font-bold">{heroMsg}</span>}
-              <button onClick={resetHero} className="px-5 py-1.5 rounded-full border border-gray-200 text-[10px] font-black text-gray-400 uppercase tracking-widest hover:bg-gray-50 transition-all">Reset</button>
-              {heroFile && (
-                <button onClick={publishHero} disabled={heroSaving}
-                  className="px-6 py-1.5 rounded-full bg-coral text-white text-[10px] font-black uppercase tracking-widest shadow-md hover:bg-coralDark transition-all">
-                  {heroSaving ? '…' : 'Publish Hero'}
-                </button>
-              )}
+              {heroMsg && <span className="text-xs text-green-600 font-bold">{heroMsg}</span>}
+              <button
+                onClick={resetHero}
+                className="px-5 py-2 rounded-full border border-gray-200 text-[10px] font-black text-gray-400 uppercase tracking-widest hover:bg-gray-50 transition-all"
+              >
+                Reset to Default
+              </button>
+              <button
+                onClick={publishHero}
+                disabled={heroSaving}
+                className="px-7 py-2 rounded-full bg-navy text-white text-[10px] font-black uppercase tracking-widest shadow-md hover:bg-navyDark transition-all"
+              >
+                {heroSaving ? 'Saving…' : 'Save Hero Changes'}
+              </button>
             </div>
           </div>
 
-          <div
-            onClick={() => heroInputRef.current?.click()}
-            className="relative w-full h-[360px] rounded-2xl overflow-hidden cursor-pointer border-2 border-dashed border-gray-200 hover:border-navy/30 bg-gray-50 flex items-center justify-center transition-all group"
-          >
-            <input ref={heroInputRef} type="file" accept={ACCEPTED} className="hidden"
-              onChange={e => { const f = e.target.files?.[0]; if (f) loadHero(f); }} />
-            {heroPreview ? (
-              <>
-                {heroIsVideo
-                  ? <video src={heroPreview} className="w-full h-full object-cover" autoPlay muted loop />
-                  : <img src={heroPreview} alt="hero" className="w-full h-full object-cover" />}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all flex items-center justify-center">
-                  <span className="bg-white/90 text-navy px-4 py-2 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity shadow-xl">CLICK TO REPLACE</span>
-                </div>
-              </>
-            ) : (
-              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                <span className="text-gray-300 font-bold uppercase tracking-widest">No Image</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Image / Media Upload Box (Lumière style macro showcase) */}
+            <div className="lg:col-span-5 space-y-3">
+              <label className="block text-xs font-bold text-navy uppercase tracking-wider">
+                Hero Macro Jewellery Media (Right Side)
+              </label>
+              <div
+                onClick={() => heroInputRef.current?.click()}
+                className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer border-2 border-dashed border-gray-200 hover:border-navy/40 bg-[#faf8f5] flex items-center justify-center transition-all group"
+              >
+                <input
+                  ref={heroInputRef}
+                  type="file"
+                  accept={ACCEPTED}
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) loadHero(f);
+                  }}
+                />
+                {heroPreview ? (
+                  <>
+                    {heroIsVideo ? (
+                      <video src={heroPreview} className="w-full h-full object-cover" autoPlay muted loop />
+                    ) : (
+                      <img src={heroPreview} alt="hero" className="w-full h-full object-cover" />
+                    )}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all flex items-center justify-center">
+                      <span className="bg-white text-navy px-4 py-2 rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity shadow-xl uppercase tracking-wider">
+                        Click to Replace Image
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                    <span className="text-gray-300 font-bold uppercase tracking-widest">No Image</span>
+                  </div>
+                )}
               </div>
-            )}
+              <p className="text-[11px] text-gray-400">
+                Recommended: 1200 × 900 px (4:3) or 1600 × 900 px. Organic macro jewellery photo on draped silk.
+              </p>
+            </div>
+
+            {/* Editorial Text Settings */}
+            <div className="lg:col-span-7 space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-navy uppercase tracking-wider mb-1.5">
+                    Tagline
+                  </label>
+                  <input
+                    type="text"
+                    value={tagline}
+                    onChange={(e) => setTagline(e.target.value)}
+                    placeholder="TIMELESS ELEGANCE"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-navy focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-navy uppercase tracking-wider mb-1.5">
+                    Headline Line 1
+                  </label>
+                  <input
+                    type="text"
+                    value={titleLine1}
+                    onChange={(e) => setTitleLine1(e.target.value)}
+                    placeholder="Crafted to"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-navy focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-navy uppercase tracking-wider mb-1.5">
+                  Headline Line 2 (Highlighted in Gold)
+                </label>
+                <input
+                  type="text"
+                  value={titleLine2}
+                  onChange={(e) => setTitleLine2(e.target.value)}
+                  placeholder="Shine Forever"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-navy focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-navy uppercase tracking-wider mb-1.5">
+                  Subtitle Paragraph
+                </label>
+                <textarea
+                  rows={2}
+                  value={subtitle}
+                  onChange={(e) => setSubtitle(e.target.value)}
+                  placeholder="Discover exquisite handcrafted jewellery pieces..."
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:border-navy focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-navy uppercase tracking-wider mb-1.5">
+                    Primary Button Text & Link
+                  </label>
+                  <div className="space-y-1.5">
+                    <input
+                      type="text"
+                      value={primaryBtnText}
+                      onChange={(e) => setPrimaryBtnText(e.target.value)}
+                      placeholder="SHOP COLLECTION"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:border-navy focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={primaryBtnLink}
+                      onChange={(e) => setPrimaryBtnLink(e.target.value)}
+                      placeholder="/jewellery"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:border-navy focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-navy uppercase tracking-wider mb-1.5">
+                    Secondary Button Text & Link (WhatsApp)
+                  </label>
+                  <div className="space-y-1.5">
+                    <input
+                      type="text"
+                      value={secondaryBtnText}
+                      onChange={(e) => setSecondaryBtnText(e.target.value)}
+                      placeholder="ORDER ON WHATSAPP"
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:border-navy focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={secondaryBtnLink}
+                      onChange={(e) => setSecondaryBtnLink(e.target.value)}
+                      placeholder="https://wa.me/919989608595?text=..."
+                      className="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:border-navy focus:outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Integrated Trust Pillars Settings (Lumière 3 Pillars) */}
+          <div className="border-t border-gray-100 pt-5 mt-4">
+            <h3 className="text-xs font-bold text-navy uppercase tracking-wider mb-3">
+              Hero Integrated Trust Pillars (3 Columns)
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-[#fcfbf9] p-3 rounded-xl border border-gray-200/70 space-y-1.5">
+                <span className="text-[10px] font-bold text-gold uppercase">Pillar 1 (Diamond)</span>
+                <input
+                  type="text"
+                  value={trust1Title}
+                  onChange={(e) => setTrust1Title(e.target.value)}
+                  placeholder="Certified Diamonds"
+                  className="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold focus:outline-none"
+                />
+                <input
+                  type="text"
+                  value={trust1Desc}
+                  onChange={(e) => setTrust1Desc(e.target.value)}
+                  placeholder="Authentic & ethically sourced"
+                  className="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="bg-[#fcfbf9] p-3 rounded-xl border border-gray-200/70 space-y-1.5">
+                <span className="text-[10px] font-bold text-gold uppercase">Pillar 2 (Warranty)</span>
+                <input
+                  type="text"
+                  value={trust2Title}
+                  onChange={(e) => setTrust2Title(e.target.value)}
+                  placeholder="Lifetime Warranty"
+                  className="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold focus:outline-none"
+                />
+                <input
+                  type="text"
+                  value={trust2Desc}
+                  onChange={(e) => setTrust2Desc(e.target.value)}
+                  placeholder="Quality you can trust, for a lifetime"
+                  className="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="bg-[#fcfbf9] p-3 rounded-xl border border-gray-200/70 space-y-1.5">
+                <span className="text-[10px] font-bold text-gold uppercase">Pillar 3 (Shipping)</span>
+                <input
+                  type="text"
+                  value={trust3Title}
+                  onChange={(e) => setTrust3Title(e.target.value)}
+                  placeholder="Free Shipping"
+                  className="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold focus:outline-none"
+                />
+                <input
+                  type="text"
+                  value={trust3Desc}
+                  onChange={(e) => setTrust3Desc(e.target.value)}
+                  placeholder="Complimentary insured delivery worldwide"
+                  className="w-full px-2.5 py-1.5 rounded-lg border border-gray-200 text-xs text-gray-500 focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1167,10 +1450,19 @@ function StandaloneBannerEditor() {
 
   return (
     <section className="space-y-5 border-t border-gray-100 pt-12">
-      <div className="flex items-end justify-between border-b border-gray-100 pb-4">
-        <div className="flex items-center gap-3">
-          <span className="w-3 h-3 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
-          <h2 className="text-xl font-display font-bold text-navy uppercase tracking-widest">Standalone Banner</h2>
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-gray-100 pb-4 gap-3">
+        <div>
+          <div className="flex items-center gap-3">
+            <span className="w-3 h-3 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
+            <h2 className="text-xl font-display font-bold text-navy uppercase tracking-widest">
+              Live Video Shopping Lounge Showcase Banner
+            </h2>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Featured inside the Live WhatsApp Video Shopping Lounge on the homepage. Recommended Size:{' '}
+            <strong className="text-navy">800 × 600 px</strong> (Ratio <strong className="text-navy">4:3</strong>) or{' '}
+            <strong className="text-navy">1200 × 900 px</strong>.
+          </p>
         </div>
         <div className="flex items-center gap-3">
           <button onClick={reset} className="px-5 py-1.5 rounded-full border border-gray-200 text-[10px] font-black text-gray-400 uppercase hover:bg-gray-50 transition-all">Reset</button>
@@ -1182,7 +1474,7 @@ function StandaloneBannerEditor() {
         </div>
       </div>
 
-      <div onClick={() => inputRef.current?.click()} className="relative w-full aspect-[21/6] rounded-2xl overflow-hidden cursor-pointer border-2 border-dashed border-gray-200 hover:border-orange-300 bg-gray-50 flex flex-col items-center justify-center transition-all group">
+      <div onClick={() => inputRef.current?.click()} className="relative w-full max-w-2xl mx-auto aspect-[4/3] max-h-[380px] rounded-2xl overflow-hidden cursor-pointer border-2 border-dashed border-gray-200 hover:border-orange-300 bg-gray-50 flex flex-col items-center justify-center transition-all group">
         <input ref={inputRef} type="file" accept={ACCEPTED_IMG_CURATED} className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) loadFile(f); }} />
         {preview ? (
           <>

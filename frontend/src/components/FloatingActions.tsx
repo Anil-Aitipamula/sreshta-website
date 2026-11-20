@@ -9,16 +9,18 @@ export default function FloatingActions() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 200) {
+      // Show only when user scrolls down beyond 300px
+      if (window.scrollY > 300) {
         setShowScrollTop(true);
       } else {
         setShowScrollTop(false);
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run on initial mount
     handleScroll();
 
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -34,27 +36,25 @@ export default function FloatingActions() {
 
   return (
     <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex flex-col items-center gap-2.5 print:hidden">
-      {/* Scroll to Top (Going Up) Button */}
-      <button
-        type="button"
-        onClick={scrollToTop}
-        aria-label="Scroll to top"
-        className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#102353] hover:bg-[#0c1b40] text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 ${
-          showScrollTop
-            ? 'opacity-100 translate-y-0 pointer-events-auto'
-            : 'opacity-0 translate-y-3 pointer-events-none'
-        }`}
-      >
-        <svg
-          className="w-5 h-5 text-white"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          viewBox="0 0 24 24"
+      {/* Scroll to Top (Going Up) Button - only visible after scrolling down */}
+      {showScrollTop && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+          className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#102353] hover:bg-[#0c1b40] text-white flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 transform active:scale-95 animate-in fade-in zoom-in-90"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 11l7-7 7 7M12 4v16" />
-        </svg>
-      </button>
+          <svg
+            className="w-5 h-5 text-white"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 11l7-7 7 7M12 4v16" />
+          </svg>
+        </button>
+      )}
 
       {/* Floating WhatsApp Button */}
       <a

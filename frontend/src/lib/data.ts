@@ -621,7 +621,7 @@ export const PLAN_DEFAULTS: Record<string, any> = {
   }
 };
 
-export const HERO_DEFAULT = '/images/hero_banner.avif';
+export const HERO_DEFAULT = '/images/lumiere_hero_ring.webp';
 
 export const OFFER_DEFAULTS = [
   '/images/offers/offer_1.jpg',

@@ -412,24 +412,24 @@ export default function Header() {
             >
               <WhatsAppIcon />
             </a>
-            <div className="hidden sm:flex w-8 h-8 rounded-full overflow-hidden border border-gray-200 items-center justify-center bg-white shrink-0">
+          </div>
+          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 justify-center min-w-0 px-1">
+            <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={logoIconUrl}
-                alt="Logo"
-                className="w-full h-full object-contain p-1"
+                src={logoIconUrl || '/images/logo_icon.png'}
+                alt="Sreshta Lotus"
+                className="w-full h-full object-contain p-0.5"
               />
             </div>
-          </div>
-          <Link href="/" className="flex items-center justify-center min-w-0 px-1">
             <Image
-              src={logoUrl}
-              alt="Sreshta"
-              width={140}
+              src={logoUrl || '/images/brand_logo.png'}
+              alt="Sreshta Jewellers"
+              width={160}
               height={45}
               className="h-8 sm:h-9 w-auto max-w-[140px] sm:max-w-[170px] object-contain"
-              style={{ width: 'auto' }}
-              unoptimized
               priority
+              unoptimized
             />
           </Link>
           <div className="flex items-center justify-end gap-3 sm:gap-4 text-navy">
@@ -595,24 +595,31 @@ export default function Header() {
         </div>
       )}
 
-      {/* Desktop white top */}
-      <div className="bg-white hidden lg:block overflow-x-clip w-full max-w-[100vw]">
-        <div className="flex items-end h-[76px] pl-[120px] xl:pl-[128px] pr-4 xl:pr-10 pb-[10px]">
-          <Link href="/" className="flex items-center shrink-0 mb-1 translate-y-0.5">
+      {/* Desktop white top header bar - Clean & Sticky (Duplicate Category Bar Removed) */}
+      <div className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 shadow-sm hidden lg:block overflow-x-clip w-full max-w-[100vw]">
+        <div className="flex items-center justify-between h-[72px] px-6 lg:px-10 max-w-7xl mx-auto">
+          <Link href="/" className="flex items-center gap-2.5 xl:gap-3 shrink-0 group">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 xl:w-11 xl:h-11 rounded-full overflow-hidden flex items-center justify-center shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={logoIconUrl || '/images/logo_icon.png'}
+                alt="Sreshta Lotus"
+                className="w-full h-full object-contain p-0.5 group-hover:scale-105 transition-transform"
+              />
+            </div>
             <Image
-              src={logoUrl}
-              alt="Sreshta"
-              width={240}
-              height={60}
-              className="h-[38px] xl:h-[42px] w-auto object-contain"
-              style={{ width: 'auto' }}
-              unoptimized
+              src={logoUrl || '/images/brand_logo.png'}
+              alt="Sreshta Jewellers"
+              width={260}
+              height={70}
+              className="h-10 sm:h-11 xl:h-12 w-auto object-contain hover:opacity-95 transition-opacity"
               priority
+              unoptimized
             />
           </Link>
 
           <div 
-            className="relative max-w-[300px] xl:max-w-[480px] shrink-0 mx-auto mb-0.5 w-full" 
+            className="relative max-w-[340px] xl:max-w-[480px] shrink-0 mx-6 w-full" 
             ref={desktopSearchRef}
             onMouseEnter={() => setSuggestionsOpen(true)}
             onMouseLeave={() => {
@@ -623,7 +630,7 @@ export default function Header() {
           >
             <form
               onSubmit={onSearchSubmit}
-              className="flex border border-gray-300 rounded overflow-hidden w-full focus-within:border-navy focus-within:ring-1 focus-within:ring-navy transition-all"
+              className="flex border border-gray-200 rounded-full overflow-hidden w-full focus-within:border-navy focus-within:ring-1 focus-within:ring-navy transition-all bg-gray-50/80 hover:bg-white"
             >
               <input
                 id="desktop-search-input"
@@ -634,14 +641,14 @@ export default function Header() {
                   setSuggestionsOpen(true);
                 }}
                 onFocus={() => { setSuggestionsOpen(true); }}
-                placeholder="Search for Jewellery"
-                className="flex-1 min-w-0 border-none outline-none px-3 py-[7px] text-[13px] text-gray-700 placeholder-gray-400 bg-white [&::-webkit-search-cancel-button]:hidden"
+                placeholder="Search for Jewellery (Gold, Silver, Solitaires...)"
+                className="flex-1 min-w-0 border-none outline-none px-4 py-[9px] text-[13px] text-gray-700 placeholder-gray-400 bg-transparent [&::-webkit-search-cancel-button]:hidden"
               />
               {searchQuery ? (
                 <button
                   type="button"
                   onClick={onClearSearch}
-                  className="px-2 text-gray-400 hover:text-gray-600 bg-white text-xs"
+                  className="px-2 text-gray-400 hover:text-gray-600 bg-transparent text-xs"
                   title="Clear search"
                 >
                   ✕
@@ -650,7 +657,7 @@ export default function Header() {
               <button
                 type="submit"
                 aria-label="Search"
-                className="bg-coral hover:bg-coralDark text-white px-4 flex items-center shrink-0 border-none cursor-pointer transition-colors"
+                className="bg-[#bb984d] hover:bg-[#a6843c] text-white px-5 flex items-center shrink-0 border-none cursor-pointer transition-colors"
               >
                 <SearchIcon />
               </button>
@@ -664,234 +671,75 @@ export default function Header() {
             />
           </div>
 
-          <div className="flex flex-col items-end ml-auto shrink-0 gap-y-[3px]">
-            <div className="flex items-center h-[33px]">
+          <div className="flex items-center gap-3 shrink-0">
+            {/* WhatsApp direct chat link */}
+            <a
+              href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-[#102353] hover:text-[#25D366] transition-colors"
+              aria-label="Chat on WhatsApp"
+              title="Chat on WhatsApp: +91 99896 08595"
+            >
+              <WhatsAppIcon />
+            </a>
+
+            {/* Wishlist */}
+            <Link href="/wishlist" className="relative p-2 text-[#102353] hover:text-[#bb984d] transition-colors" aria-label="Wishlist">
+              <HeartIcon />
+              {wishlistCount > 0 ? (
+                <span className="absolute top-1 right-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
+                  {wishlistCount > 9 ? '9+' : wishlistCount}
+                </span>
+              ) : null}
+            </Link>
+
+            {/* Cart */}
+            <Link href="/cart" aria-label="Shopping cart" className="relative p-2 text-[#102353] hover:text-[#bb984d] transition-colors">
+              <BagIcon />
+              {cartCount > 0 ? (
+                <span className="absolute top-1 right-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-[#102353] text-[#bb984d] border border-[#bb984d] text-[9px] flex items-center justify-center font-bold shadow-sm">
+                  {cartCount > 9 ? '9+' : cartCount}
+                </span>
+              ) : null}
+            </Link>
+
+            {/* Account / Login */}
+            <div className="flex items-center ml-2 border-l border-gray-200 pl-3">
               {customer ? (
-                <>
+                <div className="flex items-center gap-2 text-xs">
                   {customer.is_admin ? (
-                    <>
-                      <Link href="/upload" className={`${ITEM3} hover:text-navy`}>
-                        Admin
-                      </Link>
-                      <span className={VDIV} />
-                    </>
+                    <Link href="/upload" className="px-2.5 py-1 rounded bg-[#102353] text-white font-medium hover:bg-[#0c1a3d] transition-colors text-[11px]">
+                      Admin
+                    </Link>
                   ) : null}
                   <Link
                     href="/account/orders"
-                    className={`${ITEM3} text-navy font-semibold max-w-[120px] truncate hover:text-[#bb984d]`}
+                    className="text-[#102353] font-semibold max-w-[100px] truncate hover:text-[#bb984d]"
                     title={customer.email}
                   >
                     {customer.name.split(' ')[0]}
                   </Link>
-                  <span className={VDIV} />
-                  <button type="button" onClick={onSignOut} className={`${ITEM4} hover:text-navy`}>
+                  <span className="text-gray-300">|</span>
+                  <button type="button" onClick={onSignOut} className="text-gray-500 hover:text-[#102353] transition-colors">
                     Sign out
                   </button>
-                </>
+                </div>
               ) : (
-                <>
-                  <Link href="/account/login" className={`${ITEM3} hover:text-navy`}>
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <Link href="/account/login" className="text-[#102353] hover:text-[#bb984d] transition-colors">
                     Sign in
                   </Link>
-                  <span className={VDIV} />
-                  <Link href="/account/signup" className={`${ITEM4} hover:text-navy`}>
+                  <span className="text-gray-300">|</span>
+                  <Link href="/account/signup" className="text-[#bb984d] hover:text-[#102353] transition-colors font-semibold">
                     Sign up
                   </Link>
-                </>
+                </div>
               )}
-            </div>
-            <div className="flex items-center h-[33px]">
-              <a
-                href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${ITEM3} relative hover:text-coral transition-colors mr-3`}
-                aria-label="WhatsApp"
-              >
-                <span className="relative inline-flex text-navy items-center justify-center">
-                  <WhatsAppIcon />
-                </span>
-              </a>
-              <Link href="/wishlist" className={`${ITEM3} relative mr-3 hover:text-coral transition-colors`} aria-label="Wishlist">
-                <span className="relative inline-flex text-navy">
-                  <HeartIcon />
-                  {wishlistCount > 0 ? (
-                    <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
-                      {wishlistCount > 9 ? '9+' : wishlistCount}
-                    </span>
-                  ) : null}
-                </span>
-              </Link>
-              <Link href="/cart" className={`${ITEM3} relative hover:text-coral transition-colors`} aria-label="Shopping cart">
-                <span className="relative inline-flex text-navy">
-                  <BagIcon />
-                  {cartCount > 0 ? (
-                    <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
-                      {cartCount > 9 ? '9+' : cartCount}
-                    </span>
-                  ) : null}
-                </span>
-              </Link>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Desktop navy nav — ERP groups */}
-      <nav className="sticky top-0 z-50 bg-navy h-[46px] hidden lg:flex items-center px-10 overflow-visible w-full max-w-[100vw]">
-        <Link
-          href="/"
-          aria-label="Home"
-          className={`absolute left-10 z-50 transition-all duration-300 ease-in-out origin-top-left bg-white rounded-full overflow-hidden shadow-sm flex items-center justify-center ${
-            scrolled ? 'w-[32px] h-[32px] top-[7px]' : 'w-[75px] h-[75px] -top-[64px]'
-          }`}
-        >
-          <Image
-            src={logoIconUrl}
-            alt="Sreshta"
-            width={75}
-            height={75}
-            className="w-full h-full object-contain p-2"
-            unoptimized
-            priority
-          />
-        </Link>
-
-        <ul className="flex items-center h-full w-full justify-center gap-2 xl:gap-5 list-none pl-10 min-w-0">
-          {navItems.map((item, index) => {
-              const isAll = item.slug === 'all-jewellery';
-              const hasMega = !isAll;
-              const articles = item.dropdown?.articles || [];
-              const callout = item.dropdown?.callout;
-              const isFirst = index === 0;
-              const isLast = index === navItems.length - 1;
-              const megaPos = isFirst
-                ? 'left-0 translate-x-0'
-                : isLast
-                  ? 'left-auto right-0 translate-x-0'
-                  : 'left-1/2 -translate-x-1/2';
-              return (
-                <li
-                  key={item.slug}
-                  className="group relative flex items-center h-full px-1.5 xl:px-2 text-white text-[10px] xl:text-[12px] font-medium whitespace-nowrap hover:bg-white/10 transition-colors after:content-[''] after:absolute after:left-0 after:right-0 after:top-full after:h-3 after:bg-transparent"
-                >
-                  <Link
-                    href={isAll ? '/jewellery' : `/jewellery/${item.slug}`}
-                    className="flex items-center gap-0.5 h-full"
-                  >
-                    {item.label}
-                    <span className="text-[12px] xl:text-[15px] leading-none opacity-80">▾</span>
-                  </Link>
-
-                  {isAll && allGroups.length > 0 ? (
-                    <div className={`absolute top-full ${megaPos} pt-0 bg-white shadow-2xl w-[min(520px,calc(100vw-1.5rem))] max-h-[70vh] overflow-y-auto py-6 rounded-b-md border-t-2 border-navy z-[120] invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-150`}>
-                      <div className="px-6 xl:px-8">
-                        <h4 className="text-navy font-bold text-[14px] mb-4 border-b border-gray-200 pb-2">
-                          Shop by category
-                        </h4>
-                        <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5">
-                          {allGroups.map((g) => (
-                            <li key={g.slug}>
-                              <Link
-                                href={`/jewellery/${g.slug}`}
-                                className="text-[#334155] text-[13px] hover:text-[#bb984d] transition-colors"
-                              >
-                                {g.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                        <Link
-                          href="/jewellery"
-                          className="inline-block mt-5 text-[12px] font-semibold text-navy hover:text-[#bb984d]"
-                        >
-                          View all jewellery →
-                        </Link>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {hasMega ? (
-                    <div className={`absolute top-full ${megaPos} bg-white shadow-2xl w-[min(640px,calc(100vw-1.5rem))] max-h-[70vh] overflow-y-auto py-6 rounded-b-md border-t-2 border-navy z-[120] invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-150`}>
-                      <div className="px-5 xl:px-8 grid grid-cols-1 sm:grid-cols-2 gap-6 xl:gap-10">
-                        <div>
-                          <h4 className="text-navy font-bold text-[14px] mb-3 border-b border-gray-200 pb-2">
-                            By Price Range
-                          </h4>
-                          <ul className="space-y-2.5">
-                            {PRICE_RANGES.map((p) => {
-                              const params = new URLSearchParams();
-                              if (p.min) params.set('price_min', String(p.min));
-                              if (p.max) params.set('price_max', String(p.max));
-                              return (
-                              <li key={p.label}>
-                                <Link 
-                                  href={`/jewellery/${item.slug}?${params.toString()}`}
-                                  className="text-[#334155] text-[13px] hover:text-[#bb984d] transition-colors"
-                                >
-                                  {p.label}
-                                </Link>
-                              </li>
-                              );
-                            })}
-                          </ul>
-                          <Link
-                            href={`/jewellery/${item.slug}`}
-                            className="inline-flex mt-6 border border-navy text-navy text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-md hover:bg-navy hover:text-white transition-colors"
-                          >
-                            View All {item.label}
-                          </Link>
-                        </div>
-                        <div>
-                          <h4 className="text-navy font-bold text-[14px] mb-3 border-b border-gray-200 pb-2">
-                            By Categories
-                          </h4>
-                          {articles.length ? (
-                            <ul className="space-y-2.5 mb-6">
-                              {articles.map((a) => (
-                                <li key={a.name}>
-                                  <Link
-                                    href={`/jewellery/${item.slug}?article=${encodeURIComponent(a.name)}`}
-                                    className="text-[#334155] text-[13px] hover:text-[#bb984d] transition-colors"
-                                  >
-                                    {a.name}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          ) : (
-                            <p className="text-[12px] text-gray-400 mb-6">No articles configured</p>
-                          )}
-                          {callout && (callout.title || callout.image || callout.desc) ? (
-                            <div className="border-t border-gray-200 pt-4 flex items-center gap-4">
-                              <div className="min-w-0 flex-1">
-                                {callout.title ? (
-                                  <p className="text-navy font-bold text-[14px] leading-snug">
-                                    {callout.title}
-                                  </p>
-                                ) : null}
-                                {callout.desc ? (
-                                  <p className="text-[12px] text-gray-500 mt-1">{callout.desc}</p>
-                                ) : null}
-                              </div>
-                              {callout.image ? (
-                                <img
-                                  src={callout.image}
-                                  alt=""
-                                  className="w-20 h-20 object-contain shrink-0"
-                                />
-                              ) : null}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-                </li>
-              );
-            })}
-        </ul>
-      </nav>
     </>
   );
 }
