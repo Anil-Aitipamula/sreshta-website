@@ -72,7 +72,7 @@ export default function PrivacyPolicyPage() {
         {/* Breadcrumb */}
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-6 pb-2">
           <p className="text-[11px] text-gray-400 uppercase tracking-widest">
-            <Link href="/" className="hover:text-[#f1592a] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-[#bb984d] transition-colors">Home</Link>
             {' '}/ <span className="text-gray-600">Privacy Policy</span>
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function PrivacyPolicyPage() {
               ) : sections.map((section, idx) => (
                 <div key={idx}>
                   {section.title && (
-                    <h2 className="text-[#f1592a] font-semibold text-[13px] mb-2">{section.title}</h2>
+                    <h2 className="text-[#bb984d] font-semibold text-[13px] mb-2">{section.title}</h2>
                   )}
                   {renderBody(section.body)}
                 </div>

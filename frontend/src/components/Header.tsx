@@ -408,7 +408,7 @@ export default function Header() {
               href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden xs:flex w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-100 items-center justify-center text-[#f1592a] hover:bg-[#f1592a] hover:text-white hover:border-[#f1592a] transition-all shrink-0"
+              className="hidden xs:flex w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-gray-100 items-center justify-center text-[#bb984d] hover:bg-[#bb984d] hover:text-white hover:border-[#bb984d] transition-all shrink-0"
             >
               <WhatsAppIcon />
             </a>
@@ -436,7 +436,7 @@ export default function Header() {
             <Link href="/wishlist" aria-label="Wishlist" className="relative inline-flex hover:text-coral transition-colors p-0.5">
               <HeartIcon />
               {wishlistCount > 0 ? (
-                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#f1592a] text-white text-[9px] flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold">
                   {wishlistCount > 9 ? '9+' : wishlistCount}
                 </span>
               ) : null}
@@ -444,7 +444,7 @@ export default function Header() {
             <Link href="/cart" aria-label="Shopping cart" className="relative inline-flex hover:text-coral transition-colors p-0.5">
               <BagIcon />
               {cartCount > 0 ? (
-                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#f1592a] text-white text-[9px] flex items-center justify-center font-bold">
+                <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold">
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               ) : null}
@@ -678,7 +678,7 @@ export default function Header() {
                   ) : null}
                   <Link
                     href="/account/orders"
-                    className={`${ITEM3} text-navy font-semibold max-w-[120px] truncate hover:text-[#f1592a]`}
+                    className={`${ITEM3} text-navy font-semibold max-w-[120px] truncate hover:text-[#bb984d]`}
                     title={customer.email}
                   >
                     {customer.name.split(' ')[0]}
@@ -716,7 +716,7 @@ export default function Header() {
                 <span className="relative inline-flex text-navy">
                   <HeartIcon />
                   {wishlistCount > 0 ? (
-                    <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#f1592a] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
+                    <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
                       {wishlistCount > 9 ? '9+' : wishlistCount}
                     </span>
                   ) : null}
@@ -726,7 +726,7 @@ export default function Header() {
                 <span className="relative inline-flex text-navy">
                   <BagIcon />
                   {cartCount > 0 ? (
-                    <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#f1592a] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
+                    <span className="absolute -top-1 -right-2 min-w-[15px] h-[15px] px-0.5 rounded-full bg-[#bb984d] text-white text-[9px] flex items-center justify-center font-bold shadow-sm">
                       {cartCount > 9 ? '9+' : cartCount}
                     </span>
                   ) : null}
@@ -794,7 +794,7 @@ export default function Header() {
                             <li key={g.slug}>
                               <Link
                                 href={`/jewellery/${g.slug}`}
-                                className="text-[#334155] text-[13px] hover:text-[#f1592a] transition-colors"
+                                className="text-[#334155] text-[13px] hover:text-[#bb984d] transition-colors"
                               >
                                 {g.label}
                               </Link>
@@ -803,7 +803,7 @@ export default function Header() {
                         </ul>
                         <Link
                           href="/jewellery"
-                          className="inline-block mt-5 text-[12px] font-semibold text-navy hover:text-[#f1592a]"
+                          className="inline-block mt-5 text-[12px] font-semibold text-navy hover:text-[#bb984d]"
                         >
                           View all jewellery →
                         </Link>
@@ -827,7 +827,7 @@ export default function Header() {
                               <li key={p.label}>
                                 <Link 
                                   href={`/jewellery/${item.slug}?${params.toString()}`}
-                                  className="text-[#334155] text-[13px] hover:text-[#f1592a] transition-colors"
+                                  className="text-[#334155] text-[13px] hover:text-[#bb984d] transition-colors"
                                 >
                                   {p.label}
                                 </Link>
@@ -852,7 +852,7 @@ export default function Header() {
                                 <li key={a.name}>
                                   <Link
                                     href={`/jewellery/${item.slug}?article=${encodeURIComponent(a.name)}`}
-                                    className="text-[#334155] text-[13px] hover:text-[#f1592a] transition-colors"
+                                    className="text-[#334155] text-[13px] hover:text-[#bb984d] transition-colors"
                                   >
                                     {a.name}
                                   </Link>

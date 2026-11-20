@@ -14,7 +14,7 @@ export default function CertificationsPage() {
       <main className="w-full bg-[#f5f5f5] min-h-screen font-sans">
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-6 pb-2">
           <p className="text-[11px] text-gray-400 uppercase tracking-widest">
-            <Link href="/" className="hover:text-[#f1592a] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-[#bb984d] transition-colors">Home</Link>
             {' '}/ <span className="text-gray-600">Our Certifications</span>
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function CertificationsPage() {
             <div className="pt-8 text-[13px] text-[#222] leading-relaxed space-y-10">
               
               <div>
-                <h2 className="text-[#f1592a] font-semibold text-[15px] mb-3 uppercase tracking-wide">The Importance of Certification</h2>
+                <h2 className="text-[#bb984d] font-semibold text-[15px] mb-3 uppercase tracking-wide">The Importance of Certification</h2>
                 <div className="space-y-4">
                   <p>The value of a precious stone is determined by its gemological makeup, natural rarity and finished quality. Diamonds and gemstones of similar appearance can have important differences in value. Even experts need powerful analytic tools to detect synthetics, treatments and enhancement processes. A Certificate clearly discloses the details of any item it accompanies, providing confidence for both buyer and seller.</p>
                   <p>Gemstones should only change hands when accompanied by a certificate attesting to quality. Regardless of location or marketplace, an authentic Laboratory Report is the common language of trust and confidence in the gemological world, and should be considered an essential part of any transaction. We take this responsibility very seriously.</p>
@@ -48,7 +48,7 @@ export default function CertificationsPage() {
               </div>
 
               <div>
-                <h2 className="text-[#f1592a] font-semibold text-[15px] mb-6 uppercase tracking-wide">Our Jewellery Certification Partners</h2>
+                <h2 className="text-[#bb984d] font-semibold text-[15px] mb-6 uppercase tracking-wide">Our Jewellery Certification Partners</h2>
                 
                 <div className="space-y-8">
                   {/* SGL */}

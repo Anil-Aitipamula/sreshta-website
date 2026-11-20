@@ -60,7 +60,7 @@ export default function WishlistPage() {
     <>
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-[1250px] mx-auto px-4 md:px-8 py-6 md:py-8">
-          <p className="text-[11px] uppercase tracking-widest text-[#f1592a] font-bold mb-1">Wishlist</p>
+          <p className="text-[11px] uppercase tracking-widest text-[#bb984d] font-bold mb-1">Wishlist</p>
           <h1 className="text-3xl md:text-4xl font-domine text-navy font-bold">
             {items.length} item{items.length === 1 ? '' : 's'}
           </h1>

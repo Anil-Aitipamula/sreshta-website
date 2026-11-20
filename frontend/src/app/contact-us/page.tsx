@@ -12,7 +12,7 @@ const WhatsAppIcon = () => (
 );
 
 const PinIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 shrink-0 mt-0.5 text-[#f1592a]">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 shrink-0 mt-0.5 text-[#bb984d]">
     <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
     <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
   </svg>
@@ -57,11 +57,11 @@ export default function ContactUs() {
           {/* Page Title */}
           <div className="flex flex-col items-center justify-center mb-14">
             <h1 className="text-[26px] md:text-[32px] font-domine font-bold tracking-wide text-[#222] uppercase text-center mb-4">
-              CONTACT <span className="text-[#f1592a]">US</span>
+              CONTACT <span className="text-[#bb984d]">US</span>
             </h1>
             <div className="flex items-center w-full max-w-[600px] gap-3">
               <div className="flex-1 h-px bg-gray-300"></div>
-              <div className="w-[7px] h-[7px] rounded-full bg-[#f1592a] shrink-0"></div>
+              <div className="w-[7px] h-[7px] rounded-full bg-[#bb984d] shrink-0"></div>
               <div className="flex-1 h-px bg-gray-300"></div>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function ContactUs() {
 
               {/* Customer Delight */}
               <div>
-                <h3 className="text-[#f1592a] font-semibold text-[15px] mb-4 font-domine">Customer Delight</h3>
+                <h3 className="text-[#bb984d] font-semibold text-[15px] mb-4 font-domine">Customer Delight</h3>
                 <div className="space-y-2 text-[14px] text-[#4a4a4a] leading-relaxed">
                   <p>Call us at <strong>{phone}</strong> (9 am–10 pm, 7 days a week)</p>
                   <p className="text-gray-400">or</p>
@@ -90,7 +90,7 @@ export default function ContactUs() {
 
               {/* WhatsApp Direct */}
               <div>
-                <h3 className="text-[#f1592a] font-semibold text-[15px] mb-4 font-domine">WhatsApp Support</h3>
+                <h3 className="text-[#bb984d] font-semibold text-[15px] mb-4 font-domine">WhatsApp Support</h3>
                 <div className="space-y-2 text-[14px] text-[#4a4a4a] leading-relaxed">
                   <p className="text-[13px] text-gray-500 font-sans">
                     Prefer chatting? Reach us directly on WhatsApp at{' '}
@@ -98,7 +98,7 @@ export default function ContactUs() {
                       href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#f1592a] font-bold hover:underline"
+                      className="text-[#bb984d] font-bold hover:underline"
                     >
                       {whatsapp}
                     </a>
@@ -111,7 +111,7 @@ export default function ContactUs() {
 
               {/* Corporate Sales */}
               <div>
-                <h3 className="text-[#f1592a] font-semibold text-[15px] mb-4 font-domine">Corporate Sales</h3>
+                <h3 className="text-[#bb984d] font-semibold text-[15px] mb-4 font-domine">Corporate Sales</h3>
                 <div className="space-y-2 text-[14px] text-[#4a4a4a] leading-relaxed">
                   <p>
                     For all corporate sales related queries please write to us at{' '}
@@ -131,7 +131,7 @@ export default function ContactUs() {
               {/* Office Addresses */}
               {addresses && addresses.length > 0 && (
                 <div>
-                  <h3 className="text-[#f1592a] font-semibold text-[15px] mb-4 font-domine">Office Addresses</h3>
+                  <h3 className="text-[#bb984d] font-semibold text-[15px] mb-4 font-domine">Office Addresses</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-[13.5px] text-[#4a4a4a] leading-relaxed">
                     {addresses.map((addr, idx) => (
                       <div key={idx}>
@@ -152,7 +152,7 @@ export default function ContactUs() {
 
             {/* ── RIGHT: Contact Form ── */}
             <div>
-              <h2 className="text-[18px] font-semibold text-[#222] mb-6 uppercase tracking-wider text-[#f1592a]">
+              <h2 className="text-[18px] font-semibold text-[#222] mb-6 uppercase tracking-wider text-[#bb984d]">
                 Have A Question?
               </h2>
               <div className="w-full h-px bg-gray-200 mb-8"></div>
@@ -166,7 +166,7 @@ export default function ContactUs() {
                   </div>
                   <p className="text-[16px] font-semibold text-[#222]">Thank you!</p>
                   <p className="text-[14px] text-gray-500">We've received your query and will get back to you within 24 hours.</p>
-                  <button onClick={() => { setSubmitted(false); setFormData({ name:'', email:'', phone:'', query:'' }); }} className="mt-2 text-[13px] text-[#f1592a] underline">Submit another</button>
+                  <button onClick={() => { setSubmitted(false); setFormData({ name:'', email:'', phone:'', query:'' }); }} className="mt-2 text-[13px] text-[#bb984d] underline">Submit another</button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6 text-[14px] text-[#4a4a4a]">
@@ -179,7 +179,7 @@ export default function ContactUs() {
                       required
                       value={formData.name}
                       onChange={e => setFormData(f => ({ ...f, name: e.target.value }))}
-                      className="flex-1 border-0 border-b border-gray-200 outline-none py-2 text-[14px] text-[#222] placeholder-gray-300 focus:border-[#f1592a] transition-colors bg-transparent"
+                      className="flex-1 border-0 border-b border-gray-200 outline-none py-2 text-[14px] text-[#222] placeholder-gray-300 focus:border-[#bb984d] transition-colors bg-transparent"
                     />
                   </div>
 
@@ -192,14 +192,14 @@ export default function ContactUs() {
                       required
                       value={formData.email}
                       onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
-                      className="flex-1 border-0 border-b border-gray-200 outline-none py-2 text-[14px] text-[#222] placeholder-gray-300 focus:border-[#f1592a] transition-colors bg-transparent"
+                      className="flex-1 border-0 border-b border-gray-200 outline-none py-2 text-[14px] text-[#222] placeholder-gray-300 focus:border-[#bb984d] transition-colors bg-transparent"
                     />
                   </div>
 
                   {/* Phone */}
                   <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-6">
                     <label className="w-auto sm:w-[80px] shrink-0 sm:pt-2 text-[#4a4a4a] font-medium">Phone</label>
-                    <div className="flex flex-1 border-b border-gray-200 focus-within:border-[#f1592a] transition-colors">
+                    <div className="flex flex-1 border-b border-gray-200 focus-within:border-[#bb984d] transition-colors">
                       <span className="text-[#4a4a4a] font-semibold pr-3 py-2 text-[14px] shrink-0">+91</span>
                       <input
                         type="tel"
@@ -220,7 +220,7 @@ export default function ContactUs() {
                       rows={4}
                       value={formData.query}
                       onChange={(e) => setFormData({ ...formData, query: e.target.value })}
-                      className="flex-1 border-0 border-b border-gray-200 outline-none py-2 text-[14px] text-[#222] placeholder-gray-300 focus:border-[#f1592a] transition-colors resize-none bg-transparent"
+                      className="flex-1 border-0 border-b border-gray-200 outline-none py-2 text-[14px] text-[#222] placeholder-gray-300 focus:border-[#bb984d] transition-colors resize-none bg-transparent"
                     ></textarea>
                   </div>
 
@@ -231,7 +231,7 @@ export default function ContactUs() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#f1592a] text-white py-4 font-bold text-[13px] tracking-widest uppercase hover:bg-[#d04a20] transition-colors rounded-sm disabled:opacity-50"
+                    className="w-full bg-[#bb984d] text-white py-4 font-bold text-[13px] tracking-widest uppercase hover:bg-[#9f7e34] transition-colors rounded-sm disabled:opacity-50"
                   >
                     {loading ? 'Sending...' : 'Submit'}
                   </button>

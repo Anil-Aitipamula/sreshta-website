@@ -88,7 +88,7 @@ export default function CartPage() {
     <div className="max-w-5xl mx-auto px-4 md:px-8 py-10">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-8">
         <div>
-          <p className="text-[11px] uppercase tracking-widest text-[#f1592a] font-bold mb-1">Cart</p>
+          <p className="text-[11px] uppercase tracking-widest text-[#bb984d] font-bold mb-1">Cart</p>
           <h1 className="font-domine text-[24px] sm:text-[28px] text-[#032C5E] font-bold">
             {items.length} item{items.length === 1 ? '' : 's'}
           </h1>
@@ -190,7 +190,7 @@ export default function CartPage() {
             <button
               type="button"
               onClick={() => router.push('/checkout')}
-              className="w-full bg-[#f1592a] hover:bg-[#d94a1f] text-white font-bold text-[12px] uppercase tracking-widest py-3.5 rounded-full transition-colors"
+              className="w-full bg-[#bb984d] hover:bg-[#9f7e34] text-white font-bold text-[12px] uppercase tracking-widest py-3.5 rounded-full transition-colors"
             >
               Proceed to checkout
             </button>

@@ -59,7 +59,7 @@ export default function TestimonialsPage() {
         {/* Breadcrumb */}
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 pt-6 pb-2">
           <p className="text-[11px] text-gray-400 uppercase tracking-widest">
-            <Link href="/" className="hover:text-[#f1592a] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-[#bb984d] transition-colors">Home</Link>
             {' '}/ <span className="text-gray-600">Testimonials</span>
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function TestimonialsPage() {
                       />
                     </div>
                     <div className="flex-1 pt-2">
-                      <h4 className="text-[#f1592a] font-semibold text-[15px] mb-3">{review.name}</h4>
+                      <h4 className="text-[#bb984d] font-semibold text-[15px] mb-3">{review.name}</h4>
                       <p className="text-gray-600 text-[14px] leading-relaxed italic relative inline-block">
                         <span className="text-[#e29db1] text-2xl absolute -top-2 -left-3">"</span>
                         {review.text}

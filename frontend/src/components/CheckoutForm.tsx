@@ -338,7 +338,7 @@ export default function CheckoutForm() {
             type="button"
             onClick={onPay}
             disabled={submitting}
-            className="w-full sm:w-auto bg-[#f1592a] hover:bg-[#d94a1f] disabled:opacity-60 text-white font-bold text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-full transition-colors"
+            className="w-full sm:w-auto bg-[#bb984d] hover:bg-[#9f7e34] disabled:opacity-60 text-white font-bold text-[12px] uppercase tracking-widest px-10 py-3.5 rounded-full transition-colors"
           >
             {submitting ? 'Starting payment…' : 'Pay securely'}
           </button>

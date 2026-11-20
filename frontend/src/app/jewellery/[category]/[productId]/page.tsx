@@ -73,10 +73,10 @@ export default async function ProductDetailPage({
     <main className="w-full bg-white min-h-screen font-sans pb-20">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-6 pb-2">
         <p className="text-[11px] text-gray-400 uppercase tracking-widest break-words leading-relaxed">
-          <Link href="/" className="hover:text-[#f1592a] transition-colors">Home</Link>
-          {' '}/ <Link href="/jewellery" className="hover:text-[#f1592a] transition-colors">Jewellery</Link>
+          <Link href="/" className="hover:text-[#bb984d] transition-colors">Home</Link>
+          {' '}/ <Link href="/jewellery" className="hover:text-[#bb984d] transition-colors">Jewellery</Link>
           {' '}/{' '}
-          <Link href={`/jewellery/${groupSlug}`} className="hover:text-[#f1592a] transition-colors capitalize">
+          <Link href={`/jewellery/${groupSlug}`} className="hover:text-[#bb984d] transition-colors capitalize">
             {(product.group || category).replace(/-/g, ' ')}
           </Link>
           {' '}/ <span className="text-gray-600">{product.name}</span>
@@ -112,7 +112,7 @@ export default async function ProductDetailPage({
         <section className="max-w-[1400px] mx-auto px-4 md:px-8 mt-16">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
-              <p className="text-[11px] uppercase tracking-widest text-[#f1592a] font-bold mb-1">
+              <p className="text-[11px] uppercase tracking-widest text-[#bb984d] font-bold mb-1">
                 More in this collection
               </p>
               <h2 className="font-domine text-2xl text-[#032C5E] font-bold capitalize">

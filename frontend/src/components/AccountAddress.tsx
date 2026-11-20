@@ -243,7 +243,7 @@ export default function AccountAddress() {
         {!formMode && (
           <button 
             onClick={() => { resetForm(); setFormMode('add'); }}
-            className="text-xs font-bold text-[#f1592a] uppercase tracking-wide hover:underline"
+            className="text-xs font-bold text-[#bb984d] uppercase tracking-wide hover:underline"
           >
             + Add New Address
           </button>
@@ -277,9 +277,9 @@ export default function AccountAddress() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {addresses.map((address, index) => (
-                <div key={address.id || index} className={`relative p-5 bg-white border rounded-xl ${address.isDefault ? 'border-[#f1592a] shadow-sm' : 'border-gray-200'}`}>
+                <div key={address.id || index} className={`relative p-5 bg-white border rounded-xl ${address.isDefault ? 'border-[#bb984d] shadow-sm' : 'border-gray-200'}`}>
                   {address.isDefault && (
-                    <span className="absolute top-0 right-0 bg-[#f1592a] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-bl-lg rounded-tr-xl">
+                    <span className="absolute top-0 right-0 bg-[#bb984d] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-bl-lg rounded-tr-xl">
                       Default
                     </span>
                   )}

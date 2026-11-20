@@ -81,7 +81,7 @@ export default function DesignLed({ liveImages, liveLabels }: Props) {
               <Link href={`/jewellery/${item.slug}`} className="flex flex-col items-center w-full group">
 
                 {/* Image Box */}
-                <div className="relative w-[92%] max-w-[380px] mx-auto mb-20 sm:mb-24 border-2 border-[#f1592a] rounded-[16px] shadow-sm bg-[#fafafa] transform-style-3d group-hover:shadow-md transition-shadow duration-300">
+                <div className="relative w-[92%] max-w-[380px] mx-auto mb-20 sm:mb-24 border-2 border-[#bb984d] rounded-[16px] shadow-sm bg-[#fafafa] transform-style-3d group-hover:shadow-md transition-shadow duration-300">
                   <img 
                     src={displayLarge} 
                     alt={`${displayLabel} worn`} 

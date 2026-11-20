@@ -214,7 +214,7 @@ export default function CheckoutThanks() {
         </Link>
         <Link
           href="/jewellery"
-          className="inline-flex bg-[#f1592a] text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full"
+          className="inline-flex bg-[#bb984d] text-white text-xs font-bold uppercase tracking-widest px-8 py-3 rounded-full"
         >
           Continue shopping
         </Link>

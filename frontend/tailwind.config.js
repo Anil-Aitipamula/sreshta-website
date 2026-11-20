@@ -11,9 +11,14 @@ module.exports = {
         xs: '400px',
       },
       colors: {
-        navy:  '#0e214d',
-        coral: '#e8604a',
-        coralDark: '#d04535',
+        navy: '#102353',
+        navyDark: '#0a1738',
+        navyLight: '#1b3474',
+        gold: '#bb984d',
+        goldDark: '#9f7e34',
+        goldLight: '#d4af37',
+        coral: '#bb984d',
+        coralDark: '#9f7e34',
       },
       fontFamily: {
         sans:    ['Inter', 'sans-serif'],

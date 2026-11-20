@@ -149,7 +149,7 @@ export default function SearchSuggestions({ query, visible, onClose, onNavigate,
   const renderDefaultSuggestions = () => {
     if (!defaultResults) return (
       <div className="h-0.5 w-full bg-gray-100 overflow-hidden">
-        <div className="h-full w-1/3 bg-gradient-to-r from-coral to-[#f7a98b] rounded-full animate-[shimmer_1s_ease-in-out_infinite]" />
+        <div className="h-full w-1/3 bg-gradient-to-r from-gold to-goldLight rounded-full animate-[shimmer_1s_ease-in-out_infinite]" />
       </div>
     );
     return (
@@ -240,7 +240,7 @@ export default function SearchSuggestions({ query, visible, onClose, onNavigate,
         {/* Loading bar */}
         {loading && trimmedQuery.length >= 2 && (
           <div className="h-0.5 w-full bg-gray-100 overflow-hidden">
-            <div className="h-full w-1/3 bg-gradient-to-r from-coral to-[#f7a98b] rounded-full animate-[shimmer_1s_ease-in-out_infinite]" />
+            <div className="h-full w-1/3 bg-gradient-to-r from-gold to-goldLight rounded-full animate-[shimmer_1s_ease-in-out_infinite]" />
           </div>
         )}
 

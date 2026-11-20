@@ -24,7 +24,7 @@ export default function BuyNowButton({ item, className = '', onAfterAdd }: Props
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full items-center justify-center gap-2 bg-[#f1592a] text-white font-bold py-3 px-6 rounded-full hover:bg-[#d94a1f] transition-colors uppercase tracking-widest text-[12px] ${className}`}
+      className={`flex w-full items-center justify-center gap-2 bg-[#bb984d] text-white font-bold py-3 px-6 rounded-full hover:bg-[#9f7e34] transition-colors uppercase tracking-widest text-[12px] ${className}`}
     >
       Buy now
     </button>

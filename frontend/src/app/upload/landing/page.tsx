@@ -795,7 +795,7 @@ function CollectionsEditor() {
     <div className="space-y-5">
       <div className="flex items-center justify-between border-b border-gray-100 pb-4">
         <div className="flex items-center gap-3">
-          <span className="w-3 h-3 rounded-full bg-gradient-to-r from-coral to-pink-400" />
+          <span className="w-3 h-3 rounded-full bg-gradient-to-r from-gold to-goldLight" />
           <h2 className="text-xl font-display font-bold text-navy uppercase tracking-widest">Latest Collections</h2>
         </div>
         <div className="flex items-center gap-3">
@@ -852,7 +852,7 @@ function CollectionsEditor() {
             </div>
             <div className="flex gap-2">
               <button onClick={() => save(i)} disabled={!files[i]}
-                className="flex-1 text-[10px] bg-gradient-to-r from-coral to-pink-400 text-white py-1.5 rounded-full font-black shadow-sm disabled:opacity-30 transition-all">
+                className="flex-1 text-[10px] bg-gradient-to-r from-gold to-goldLight text-white py-1.5 rounded-full font-black shadow-sm disabled:opacity-30 transition-all">
                 {saving === i ? '…' : 'SAVE'}
               </button>
               <button onClick={() => reset(i)}

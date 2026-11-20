@@ -122,7 +122,7 @@ export default function PoliciesAdmin() {
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="px-6 py-2.5 bg-[#f1592a] text-white rounded-md font-semibold text-sm hover:bg-[#d64518] transition-colors disabled:opacity-50"
+            className="px-6 py-2.5 bg-[#bb984d] text-white rounded-md font-semibold text-sm hover:bg-[#d64518] transition-colors disabled:opacity-50"
           >
             {isSaving ? 'Saving...' : 'Save Changes'}
           </button>
@@ -134,7 +134,7 @@ export default function PoliciesAdmin() {
         <div className="flex space-x-2 border-b border-gray-200 mb-8">
           <button
             className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
-              activeTab === 'privacyPolicy' ? 'border-[#f1592a] text-[#f1592a]' : 'border-transparent text-gray-500 hover:text-gray-700'
+              activeTab === 'privacyPolicy' ? 'border-[#bb984d] text-[#bb984d]' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
             onClick={() => setActiveTab('privacyPolicy')}
           >
@@ -142,7 +142,7 @@ export default function PoliciesAdmin() {
           </button>
           <button
             className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
-              activeTab === 'termsConditions' ? 'border-[#f1592a] text-[#f1592a]' : 'border-transparent text-gray-500 hover:text-gray-700'
+              activeTab === 'termsConditions' ? 'border-[#bb984d] text-[#bb984d]' : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
             onClick={() => setActiveTab('termsConditions')}
           >
@@ -191,7 +191,7 @@ export default function PoliciesAdmin() {
                       type="text"
                       value={section.title}
                       onChange={(e) => updateSection(idx, 'title', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f1592a] focus:border-transparent outline-none font-semibold text-gray-800"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#bb984d] focus:border-transparent outline-none font-semibold text-gray-800"
                       placeholder="e.g. 1. Introduction"
                     />
                   </div>
@@ -200,7 +200,7 @@ export default function PoliciesAdmin() {
                     <textarea
                       value={section.body}
                       onChange={(e) => updateSection(idx, 'body', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f1592a] focus:border-transparent outline-none text-gray-700 min-h-[150px] leading-relaxed"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#bb984d] focus:border-transparent outline-none text-gray-700 min-h-[150px] leading-relaxed"
                       placeholder="Enter the section content here..."
                     />
                   </div>
@@ -211,7 +211,7 @@ export default function PoliciesAdmin() {
 
           <button
             onClick={addSection}
-            className="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 font-semibold hover:border-[#f1592a] hover:text-[#f1592a] hover:bg-orange-50/30 transition-all flex items-center justify-center gap-2"
+            className="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 font-semibold hover:border-[#bb984d] hover:text-[#bb984d] hover:bg-orange-50/30 transition-all flex items-center justify-center gap-2"
           >
             <span>+</span> Add New Section
           </button>

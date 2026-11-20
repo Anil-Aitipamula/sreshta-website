@@ -25,13 +25,13 @@ export default async function AboutUsPage() {
           {/* Title Section */}
           <div className="flex flex-col items-center justify-center mb-16">
             <h1 className="text-[26px] md:text-[32px] font-domine font-bold tracking-wide text-[#222] uppercase text-center mb-4">
-              ABOUT <span className="text-[#f1592a]">US</span>
+              ABOUT <span className="text-[#bb984d]">US</span>
             </h1>
 
             {/* Decorative separator */}
             <div className="flex items-center w-full max-w-[600px] gap-3">
               <div className="flex-1 h-px bg-gray-300"></div>
-              <div className="w-[7px] h-[7px] rounded-full bg-[#f1592a] shrink-0"></div>
+              <div className="w-[7px] h-[7px] rounded-full bg-[#bb984d] shrink-0"></div>
               <div className="flex-1 h-px bg-gray-300"></div>
             </div>
           </div>
@@ -42,7 +42,7 @@ export default async function AboutUsPage() {
               <div key={idx} className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
                   <div className="w-[44px] h-[44px] shrink-0 bg-[#fff5f2] rounded-full flex items-center justify-center">
-                    <span className="text-[#f1592a] font-bold text-xl">{idx + 1}</span>
+                    <span className="text-[#bb984d] font-bold text-xl">{idx + 1}</span>
                   </div>
                   <h2 className="text-[20px] md:text-[22px] font-domine font-bold text-[#715c62]">{col.title}</h2>
                 </div>

@@ -147,7 +147,7 @@ function SignupForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-xl bg-navy hover:bg-[#021f42] disabled:opacity-60 text-white font-bold text-[12px] uppercase tracking-widest py-3.5 transition-colors"
+          className="w-full rounded-xl bg-navy hover:bg-navyDark disabled:opacity-60 text-white font-bold text-[12px] uppercase tracking-widest py-3.5 transition-colors shadow-sm"
         >
           {submitting ? 'Creating…' : 'Create account'}
         </button>
@@ -167,7 +167,7 @@ export default function SignupPage() {
   return (
     <>
       <Header />
-      <main className="flex min-h-[calc(100vh-180px)] items-center justify-center bg-[#fffbfa] px-4 py-12">
+      <main className="flex min-h-[calc(100vh-180px)] items-center justify-center bg-[#f8f9fc] px-4 py-12">
         <Suspense fallback={<div className="text-center text-sm text-gray-400">Loading…</div>}>
           <SignupForm />
         </Suspense>
